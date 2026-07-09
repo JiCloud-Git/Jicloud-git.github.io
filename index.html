@@ -461,6 +461,46 @@
       pointer-events: none;
     }
 
+    /* REAL SCREENSHOT PHONE */
+    .visual-stack { display: flex; flex-direction: column; align-items: center; }
+    .phone-real {
+      width: 174px; height: 356px;
+      border: 2px solid rgba(255,255,255,0.12);
+      border-radius: 34px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+      position: relative; z-index: 2;
+    }
+    .phone-real img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .shot-strip { display: flex; gap: 8px; margin-top: 18px; justify-content: center; }
+    .shot-strip img {
+      width: 54px; height: 116px; object-fit: cover; object-position: top center;
+      border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); opacity: 0.85;
+      transition: transform .2s, opacity .2s;
+    }
+    .shot-strip img:hover { transform: translateY(-3px); opacity: 1; }
+
+    /* LABS / EXPLORING */
+    .labs { max-width: 1100px; margin: 0 auto; padding: 0 24px 110px; }
+    .lab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    @media (max-width: 700px) { .lab-grid { grid-template-columns: 1fr; } }
+    .lab-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px 30px;
+      transition: transform .2s, border-color .2s;
+    }
+    .lab-card:hover { transform: translateY(-3px); border-color: #2c2c3a; }
+    .lab-icon { font-size: 26px; margin-bottom: 16px; display: block; }
+    .lab-status {
+      display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
+      text-transform: uppercase; color: var(--muted);
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: 20px; margin-bottom: 16px;
+    }
+    .lab-card h3 { font-size: 19px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 10px; }
+    .lab-card p { font-size: 14px; color: var(--sub); line-height: 1.6; }
+
     /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
@@ -481,7 +521,11 @@
 
 <nav>
   <div class="logo">jicloud<span>.</span>studio</div>
-  <a href="mailto:jicloud.studio@gmail.com">Contact</a>
+  <div style="display:flex;gap:22px;align-items:center">
+    <a href="#apps">Apps</a>
+    <a href="#lab">Lab</a>
+    <a href="mailto:jicloud.studio@gmail.com">Contact</a>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -511,6 +555,7 @@
         <ul class="feature-list">
           <li>Curated hidden spots by expats who live here</li>
           <li>Multi-transport route comparison (subway, bus, taxi)</li>
+          <li>Live transit, weather &amp; air quality via public data</li>
           <li>Community Q&amp;A and local meetups</li>
           <li>Living guide — visa, banking, sim cards &amp; more</li>
         </ul>
@@ -527,22 +572,14 @@
 
       <div class="app-card-visual">
         <div class="glow-orange"></div>
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="map-bg">
-              <div class="map-pin" style="top:30%;left:40%">📍</div>
-              <div class="map-pin" style="top:50%;left:60%">📍</div>
-              <div class="map-pin" style="top:65%;left:30%">🗺️</div>
-            </div>
-            <div class="bottom-sheet-mock">
-              <div class="mock-bar"></div>
-              <div class="mock-row">
-                <div class="mock-chip active"></div>
-                <div class="mock-chip"></div>
-                <div class="mock-chip"></div>
-              </div>
-              <div class="mock-card"></div>
-            </div>
+        <div class="visual-stack">
+          <div class="phone-real">
+            <img src="assets/nadeuri/explore.jpg" alt="Nadeuri — hidden-spots map with nearby local places" loading="lazy">
+          </div>
+          <div class="shot-strip">
+            <img src="assets/nadeuri/temple.jpg" alt="Spot detail with local context" loading="lazy">
+            <img src="assets/nadeuri/routes.jpg" alt="Transport route comparison" loading="lazy">
+            <img src="assets/nadeuri/ask.jpg" alt="Community Q&amp;A" loading="lazy">
           </div>
         </div>
       </div>
@@ -612,6 +649,26 @@
           </a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORING / NEW VENTURES -->
+<section class="labs" id="lab">
+  <p class="section-label">In the Lab</p>
+  <h2 class="section-title">New ventures,<br>under exploration.</h2>
+  <div class="lab-grid">
+    <div class="lab-card">
+      <span class="lab-icon">🧸</span>
+      <span class="lab-status">Researching</span>
+      <h3>Kids-Cafe AI</h3>
+      <p>Consent-based behavior analysis for children's cafes — helping staff spot safety moments and understand play patterns, with privacy designed in from the start.</p>
+    </div>
+    <div class="lab-card">
+      <span class="lab-icon">📊</span>
+      <span class="lab-status">Prototyping</span>
+      <h3>Trade-Area Analytics</h3>
+      <p>Public-data-driven insight for deciding where to open a business — foot traffic, storefronts, competition and demographics distilled into a clear go / no-go read.</p>
     </div>
   </div>
 </section>
