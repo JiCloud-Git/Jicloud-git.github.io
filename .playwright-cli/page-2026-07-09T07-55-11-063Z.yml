@@ -1,0 +1,101 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]: jicloud.studio
+    - generic [ref=e4]:
+      - link "Apps" [ref=e5] [cursor=pointer]:
+        - /url: "#apps"
+      - link "Lab" [ref=e6] [cursor=pointer]:
+        - /url: "#lab"
+      - link "Contact" [ref=e7] [cursor=pointer]:
+        - /url: mailto:jicloud.studio@gmail.com
+  - generic [ref=e8]:
+    - generic [ref=e9]: ✦ Independent Mobile Studio · Seoul
+    - heading "Apps built for real experiences." [level=1] [ref=e10]:
+      - text: Apps built for
+      - emphasis [ref=e11]: real experiences.
+    - paragraph [ref=e12]: Small studio, thoughtful apps. We build mobile tools for people who want to explore Korea beyond the guidebook.
+    - generic [ref=e13]:
+      - link "View Apps →" [ref=e14] [cursor=pointer]:
+        - /url: "#apps"
+      - link "Get in touch" [ref=e15] [cursor=pointer]:
+        - /url: mailto:jicloud.studio@gmail.com
+  - generic [ref=e16]:
+    - paragraph [ref=e17]: Our Apps
+    - heading "Built with care, designed to last." [level=2] [ref=e18]:
+      - text: Built with care,
+      - text: designed to last.
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: 🗺️
+        - generic [ref=e23]: Travel · Community
+        - heading "Nadeuri" [level=2] [ref=e24]
+        - paragraph [ref=e25]: Hidden Korea for foreigners — discover local spots, compare routes, and connect with the expat community.
+        - list [ref=e26]:
+          - listitem [ref=e27]: Curated hidden spots by expats who live here
+          - listitem [ref=e28]: Multi-transport route comparison (subway, bus, taxi)
+          - listitem [ref=e29]: Live transit, weather & air quality via public data
+          - listitem [ref=e30]: Community Q&A and local meetups
+          - listitem [ref=e31]: Living guide — visa, banking, sim cards & more
+        - generic [ref=e32]:
+          - link "App Store Coming soon":
+            - /url: "#"
+            - img
+            - generic:
+              - text: App Store
+              - generic: Coming soon
+      - generic [ref=e34]:
+        - img "Nadeuri — hidden-spots map with nearby local places" [ref=e36]
+        - generic [ref=e37]:
+          - img "Spot detail with local context" [ref=e38]
+          - img "Transport route comparison" [ref=e39]
+          - img "Community Q&A" [ref=e40]
+    - generic [ref=e42]:
+      - img "FamilyWork — 가족 할 일 캘린더와 리워드 화면" [ref=e46]
+      - generic [ref=e47]:
+        - generic [ref=e48]: ✅
+        - generic [ref=e49]: Family · Productivity
+        - heading "FamilyWork" [level=2] [ref=e50]
+        - paragraph [ref=e51]: Make household chores fun for the whole family with task tracking, star rewards, and shared progress.
+        - list [ref=e52]:
+          - listitem [ref=e53]: Assign and track chores for each family member
+          - listitem [ref=e54]: Star reward system to motivate kids
+          - listitem [ref=e55]: Real-time sync across all family devices
+          - listitem [ref=e56]: Live on the App Store — Google Play coming soon
+        - generic [ref=e57]:
+          - link "App Store" [ref=e58] [cursor=pointer]:
+            - /url: https://apps.apple.com/kr/app/%ED%8C%A8%EB%B0%80%EB%A6%AC%EC%9B%8C%ED%81%AC/id6775707078
+            - img [ref=e59]
+            - text: App Store
+          - link "Google Play Coming soon":
+            - /url: "#"
+            - img
+            - generic:
+              - text: Google Play
+              - generic: Coming soon
+  - generic [ref=e61]:
+    - paragraph [ref=e62]: In the Lab
+    - heading "New ventures, under exploration." [level=2] [ref=e63]:
+      - text: New ventures,
+      - text: under exploration.
+    - generic [ref=e64]:
+      - generic [ref=e65]:
+        - generic [ref=e66]: 👣
+        - generic [ref=e67]: Pilot prep
+        - heading "놀이발자국 · NoriTrail" [level=3] [ref=e68]
+        - paragraph [ref=e69]:
+          - text: Play-personality reports for children's cafes. A child wears a colored band and simply plays — AI reads only their movement (never faces), and a report reaches the parent after each visit. Consent-first, video is never stored, servers stay in Korea. App built & landing live at
+          - link "noritrail.com" [ref=e70] [cursor=pointer]:
+            - /url: https://noritrail.com
+          - text: .
+      - generic [ref=e71]:
+        - generic [ref=e72]: 📊
+        - generic [ref=e73]: In development
+        - heading "Trade-Area Analytics" [level=3] [ref=e74]
+        - paragraph [ref=e75]: Public-data-driven insight for deciding where to open a business — foot traffic, storefronts, competition and demographics distilled into a clear go / no-go read.
+  - contentinfo [ref=e76]:
+    - paragraph [ref=e77]: © 2026 JicloudStudio · Seoul, Korea
+    - generic [ref=e78]:
+      - link "Contact" [ref=e79] [cursor=pointer]:
+        - /url: mailto:jicloud.studio@gmail.com
+      - link "Privacy Policy" [ref=e80] [cursor=pointer]:
+        - /url: /privacy
