@@ -8,7 +8,8 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:var(--f);background:var(--paper);color:var(--ink);line-height:1.7;
-  font-size:16px;-webkit-font-smoothing:antialiased}
+  font-size:16px;-webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word}
 
 /* header */
 .site-head{position:sticky;top:0;z-index:20;background:rgba(253,251,247,.9);
