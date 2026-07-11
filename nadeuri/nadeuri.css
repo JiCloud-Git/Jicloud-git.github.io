@@ -93,15 +93,27 @@ th{background:#F6F1E8;color:var(--ink);font-weight:700}
 .cta{display:inline-block;background:var(--ink);color:#fff;font-size:14px;font-weight:700;
   border-radius:999px;padding:10px 22px;letter-spacing:.01em}
 .story p{font-size:16px}
+/* dictionary card — the name's meaning */
+.dict{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--persimmon);
+  border-radius:14px;padding:24px 26px;margin:18px 0}
+.dict-word{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.dict-pron{font-family:var(--mono);font-size:15px;font-weight:500;color:var(--persimmonD);margin-left:6px}
+.dict-pos{font-size:13px;font-weight:600;color:var(--muted);margin-left:8px;font-style:italic}
+.dict-def{margin:10px 0 0;font-size:15.5px;color:var(--ink2)}
+/* mission pull quote */
+.mission blockquote{margin:44px 0 8px;padding:6px 10px 6px 26px;border-left:4px solid var(--persimmon)}
+.mission p{font-size:21px;font-weight:700;line-height:1.5;color:var(--ink);letter-spacing:-.01em;margin:0}
+/* feature cards */
 .feat{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
 .fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;
   box-shadow:0 6px 18px rgba(20,33,59,.05)}
-.fcard .ic{font-size:24px}
-.fcard h3{margin:10px 0 6px;font-size:16.5px}
+.fic{width:30px;height:30px}
+.fcard h3{margin:12px 0 6px;font-size:16.5px}
 .fcard p{font-size:14px;color:var(--ink2);margin:0}
+.lcard .fic{width:26px;height:26px}
 .shots{display:flex;gap:14px;overflow-x:auto;margin-top:18px;padding-bottom:10px;
   scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
 .shots img{width:236px;flex:none;border-radius:18px;border:1px solid var(--line);
   box-shadow:0 10px 24px rgba(20,33,59,.12);scroll-snap-align:start}
-@media(max-width:640px){.feat{grid-template-columns:1fr}}
+@media(max-width:640px){.feat{grid-template-columns:1fr}.mission p{font-size:18px}}
 @media(max-width:560px){.contact dl{grid-template-columns:1fr}}
