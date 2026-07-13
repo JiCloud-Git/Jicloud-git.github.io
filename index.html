@@ -213,7 +213,9 @@
       justify-content: center;
       font-size: 30px;
       margin-bottom: 24px;
+      overflow: hidden;
     }
+    .app-icon-wrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; display: block; }
 
     .nadeuri-card { background: linear-gradient(135deg, #111118, #0f0f1a); }
     .nadeuri-card .app-icon-wrap { background: rgba(232,124,62,0.15); }
@@ -548,7 +550,7 @@
   <div class="app-card nadeuri-card">
     <div class="app-card-inner">
       <div class="app-card-info">
-        <div class="app-icon-wrap">🗺️</div>
+        <div class="app-icon-wrap"><img src="assets/icons/nadeuri.png" alt="Nadeuri app icon"></div>
         <span class="app-tag">Travel · Community</span>
         <h2>Nadeuri</h2>
         <p>The Korea Google Maps can’t show you — hidden local spots, real ways to get there, and answers from people who speak your language.</p>
@@ -603,7 +605,7 @@
       </div>
 
       <div class="app-card-info">
-        <div class="app-icon-wrap">✅</div>
+        <div class="app-icon-wrap"><img src="assets/icons/familywork.png" alt="FamilyWork app icon"></div>
         <span class="app-tag">Family · Productivity</span>
         <h2>FamilyWork</h2>
         <p>Make household chores fun for the whole family with task tracking, star rewards, and shared progress.</p>
