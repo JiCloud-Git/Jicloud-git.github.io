@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이지플랜북 — 우리 스튜디오에 맞춘 웨딩 촬영 플랜북</title>
+<meta name="description" content="스튜디오 이름과 저장해둔 캡처만 보내면, 두 사람의 룩·커플 포즈·당일 동선·부케까지 담긴 10페이지 촬영 플랜북 PDF를 만들어 드립니다.">
+<meta property="og:title" content="이지플랜북 — 웨딩 촬영 플랜북">
+<meta property="og:description" content="우리 스튜디오 화보를 분석해 룩 조합·커플 포즈·당일 동선·플라워까지 정리한 우리만의 촬영 플랜북 PDF.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/easylogger.png">
+<style>
+  :root{
+    --bg:#FAF7F0; --ink:#2B2724; --sub:#6E655B; --tan:#8A6F55; --line:#E2D9CA;
+    --dark:#2B2724;
+    --yellow:#F6DE79;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Apple SD Gothic Neo","Pretendard",-apple-system,sans-serif;
+    background:#FAF7F0; color:#2B2724;
+    word-break:keep-all; overflow-wrap:break-word;
+    line-height:1.6;
+  }
+  img{max-width:100%}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  .serif{font-family:"Times New Roman",serif;letter-spacing:.28em}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(250,247,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .hd{display:flex;align-items:center;justify-content:space-between;height:56px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:900;font-size:16px}
+  .logo img{width:30px;height:30px;border-radius:50%}
+  .logo small{display:block;font-weight:600;font-size:10px;color:var(--tan);letter-spacing:.08em}
+  .hd .cta-s{background:var(--ink);color:#FAF7F0;font-size:13px;font-weight:700;padding:9px 16px;border-radius:99px;text-decoration:none}
+
+  /* hero */
+  .hero{padding:52px 0 40px;text-align:left}
+  .badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ink);border-radius:99px;padding:5px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;margin-bottom:18px}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);border:1px solid rgba(0,0,0,.15)}
+  h1{font-size:clamp(28px,7.2vw,40px);font-weight:900;line-height:1.28;letter-spacing:-.02em;margin-bottom:14px}
+  h1 .u{box-shadow:inset 0 -0.42em 0 var(--yellow)}
+  .hero p.sub{font-size:15px;color:#55493E;line-height:1.75;margin-bottom:24px}
+  .cta{display:inline-block;background:var(--ink);color:#FAF7F0;font-size:16px;font-weight:800;padding:16px 28px;border-radius:14px;text-decoration:none;text-align:center}
+  .cta.alt{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .price-cap{font-size:12.5px;color:var(--sub)}
+  .price-cap b{color:var(--ink)}
+
+  /* section base */
+  section{padding:44px 0}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.22em;color:var(--tan);margin-bottom:10px}
+  h2{font-size:clamp(21px,5.6vw,28px);font-weight:900;line-height:1.35;letter-spacing:-.01em;margin-bottom:10px}
+  .lead{font-size:14.5px;color:#55493E;margin-bottom:24px}
+
+  /* pain strip */
+  .pains{background:#2B2724;color:#FAF7F0}
+  .pains h2{color:#FAF7F0}
+  .pains .eyebrow{color:#D8C6AE}
+  .pain{border-top:1px solid rgba(250,247,240,.16);padding:16px 0}
+  .pain b{display:block;font-size:15.5px;margin-bottom:4px;color:#EADFCC}
+  .pain span{font-size:13.5px;color:rgba(250,247,240,.72)}
+
+  /* mockup preview */
+  .mockwrap{overflow-x:auto;display:flex;gap:12px;padding:6px 2px 14px;-webkit-overflow-scrolling:touch}
+  .mock{flex:none;width:250px;aspect-ratio:297/210;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 22px rgba(43,39,36,.08);padding:12px;display:flex;flex-direction:column}
+  .mock .mh{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink);padding-bottom:4px;margin-bottom:7px}
+  .mock .mh i{font-style:normal;font-size:6px;letter-spacing:.2em;color:var(--tan);font-family:"Times New Roman",serif}
+  .mock .mh b{font-size:7.5px;font-weight:800}
+  .ph{background:linear-gradient(135deg,#E8E1D3,#D9CFBC);border-radius:3px}
+  .mrow{display:flex;gap:6px;flex:1;min-height:0}
+  .mcol{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}
+  .mtag{font-size:6px;font-weight:700;color:var(--sub)}
+  .mline{height:5px;border-radius:2px;background:#EDE6D8}
+  .mbox{border:1px solid var(--ink);border-radius:4px;padding:5px;display:flex;flex-direction:column;gap:3px}
+  .mbox.dark{background:var(--ink)}
+  .mbox.dark .mline{background:#4A443F}
+  .mcap{font-size:8px;color:var(--sub);text-align:center;margin-top:8px}
+
+  /* pages list */
+  .pglist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+  .pg{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+  .pg i{font-style:normal;font-size:10px;font-weight:800;color:var(--tan);letter-spacing:.12em;display:block;margin-bottom:3px}
+  .pg b{font-size:13.5px;display:block;margin-bottom:2px}
+  .pg span{font-size:11.5px;color:var(--sub);line-height:1.5;display:block}
+
+  /* how */
+  .steps{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+  .step{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+  .step .no{flex:none;width:34px;height:34px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;border:1px solid rgba(0,0,0,.12)}
+  .step b{display:block;font-size:15px;margin-bottom:3px}
+  .step span{font-size:13px;color:var(--sub);line-height:1.6}
+
+  /* story */
+  .story{background:#F3EDE2;border-radius:16px;padding:24px 20px;display:flex;flex-direction:column;gap:12px}
+  .story .who{display:flex;align-items:center;gap:10px}
+  .story .who img{width:40px;height:40px;border-radius:50%}
+  .story .who b{font-size:14px;display:block}
+  .story .who span{font-size:11.5px;color:var(--sub)}
+  .story p{font-size:14px;line-height:1.8;color:#3E362E}
+  .story p b{box-shadow:inset 0 -0.38em 0 var(--yellow)}
+
+  /* price / sku cards */
+  .skus{display:grid;grid-template-columns:1fr;gap:14px;margin-top:6px}
+  .sku{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:24px 20px;display:flex;flex-direction:column}
+  .sku.hero-sku{background:#2B2724;color:#FAF7F0;border-color:#2B2724}
+  .sku .tag{font-size:10.5px;font-weight:800;letter-spacing:.18em;color:var(--tan);margin-bottom:8px}
+  .sku.hero-sku .tag{color:#D8C6AE}
+  .sku h3{font-size:19px;font-weight:900;margin-bottom:2px}
+  .sku .for{font-size:12px;color:var(--sub);margin-bottom:12px}
+  .sku.hero-sku .for{color:rgba(250,247,240,.6)}
+  .sku .amt{font-size:30px;font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
+  .sku .amt small{font-size:14px;font-weight:700}
+  .sku ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+  .sku li{font-size:13px;padding-left:19px;position:relative;color:#3E362E}
+  .sku.hero-sku li{color:rgba(250,247,240,.88)}
+  .sku li::before{content:"✓";position:absolute;left:0;color:var(--tan);font-weight:900}
+  .sku.hero-sku li::before{color:var(--yellow)}
+  .sku .cta{margin-top:auto;width:100%;text-align:center}
+  .sku.hero-sku .cta{background:var(--yellow);color:var(--ink)}
+  .bundle{margin-top:14px;background:linear-gradient(100deg,#F6DE79,#F0D25A);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .bundle .bi{flex:1;min-width:200px}
+  .bundle b{font-size:15.5px;display:block}
+  .bundle span{font-size:12.5px;color:#55493E;line-height:1.55;display:block;margin-top:2px}
+  .bundle .bp{font-size:22px;font-weight:900;white-space:nowrap}
+  .bundle .bp s{font-size:13px;font-weight:600;color:#8a7b45;margin-right:6px}
+  @media (min-width:640px){ .skus{grid-template-columns:1fr 1fr} }
+
+  /* faq */
+  details{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;overflow:hidden}
+  summary{cursor:pointer;padding:14px 16px;font-size:14px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  summary::after{content:"+";font-size:18px;color:var(--tan);font-weight:400;flex:none}
+  details[open] summary::after{content:"–"}
+  details .a{padding:0 16px 15px;font-size:13px;color:var(--sub);line-height:1.75}
+
+  /* footer */
+  footer{background:#2B2724;color:rgba(250,247,240,.55);padding:34px 0 44px;font-size:11.5px;line-height:1.8}
+  footer .flogo{display:flex;align-items:center;gap:8px;margin-bottom:14px;color:#FAF7F0;font-weight:800;font-size:14px}
+  footer .flogo img{width:26px;height:26px;border-radius:50%}
+  footer a{color:#D8C6AE;text-decoration:none}
+  footer .links{margin:10px 0;display:flex;gap:14px;flex-wrap:wrap}
+  footer .ai{margin-top:12px;padding-top:12px;border-top:1px solid rgba(250,247,240,.14);font-size:10.5px}
+  footer details{background:transparent;border:none;border-radius:0;margin:0;overflow:visible}
+  footer summary{padding:0;font-size:11px;font-weight:600;color:#D8C6AE}
+  footer summary::after{content:"";display:none}
+  footer details .fd{padding:6px 0 0;font-size:11px;color:rgba(250,247,240,.55)}
+
+  @media (min-width:640px){
+    .hero{padding:72px 0 56px}
+    .steps{flex-direction:row}
+    .step{flex:1;flex-direction:column;gap:10px}
+    .pglist{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hd">
+    <div class="logo">
+      <img src="img/easylogger.png" alt="이지로거">
+      <div>이지플랜북<small>by 이지로거 · Jicloud.Studio</small></div>
+    </div>
+    <a class="cta-s" href="#apply">신청하기</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="wrap hero">
+  <span class="badge"><span class="dot"></span>결혼 준비 중인 이지로거가 직접 만들고 씁니다</span>
+  <h1>우리 스튜디오에 맞춘<br><span class="u">웨딩 촬영 플랜북</span>,<br>캡처만 보내면 끝.</h1>
+  <p class="sub">촬영할 스튜디오 이름과 저장해둔 레퍼런스 캡처를 보내주세요. 스튜디오 화보를 분석해서 <b>두 사람의 룩 조합 · 커플 포즈 · 신랑 예복 디테일 · 당일 동선 · 부케 플랜</b>까지 담긴 10페이지 플랜북 PDF를 만들어 드립니다. 스튜디오·예복샵·드레스샵 상담 때 그대로 내밀면 되는 문서예요.</p>
+  <div class="cta-row">
+    <a class="cta" href="#apply">내 플랜북 신청하기</a>
+    <a class="cta alt" href="#preview">미리보기</a>
+  </div>
+  <div class="price-cap">런칭 가격 <b>9,900원</b> · 신청 후 24시간 내 전달 · 드레스 셀렉이 남았다면 <a href="#apply" style="color:var(--tan);font-weight:700">신부 에디션</a>부터</div>
+</div>
+
+<!-- PAIN -->
+<section class="pains">
+  <div class="wrap">
+    <div class="eyebrow">WHY</div>
+    <h2>레퍼런스는 넘치는데,<br>"우리 촬영 계획"은 어디에도 없습니다.</h2>
+    <div style="height:14px"></div>
+    <div class="pain"><b>인스타 저장만 쌓여가는 중</b><span>마음에 드는 컷을 수십 개 저장해도, 우리 스튜디오에서 꺼내 쓸 수 있는 "계획"으로 정리하는 건 완전히 다른 일이죠.</span></div>
+    <div class="pain"><b>특히 신랑 쪽은 검색해도 안 나와요</b><span>드레스 정보는 많지만 "이 스튜디오 세트에서 신랑은 뭘 입지?"— 조끼·핏·헤어까지 답해주는 곳은 없습니다.</span></div>
+    <div class="pain"><b>스튜디오 촬영은 다시 못 찍어요</b><span>요청컷 정리를 못 해서 놓친 장면, 세트와 안 맞던 의상, 지정 못 한 흑백 컷 — 재촬영은 수십만 원입니다.</span></div>
+  </div>
+</section>
+
+<!-- PREVIEW -->
+<section id="preview">
+  <div class="wrap">
+    <div class="eyebrow">PREVIEW</div>
+    <h2>이런 문서를 받게 됩니다</h2>
+    <p class="lead">A4 가로 10페이지 PDF. 아래는 구성 미리보기예요 — 실제 플랜북에는 여러분이 보내주신 레퍼런스가 함께 배치됩니다.</p>
+  </div>
+  <div class="wrap">
+    <div class="mockwrap">
+      <!-- mock 1: zone map -->
+      <div>
+        <div class="mock">
+          <div class="mh"><i>PLANBOOK</i><b>① 스튜디오 존 맵</b></div>
+          <div class="mrow">
+            <div class="mcol"><div class="ph" style="flex:1"></div><div class="mtag">계단 홀 — LOOK 1</div><div class="ph" style="flex:1"></div><div class="mtag">소파 존 — LOOK 2</div></div>
+            <div class="mcol"><div class="ph" style="flex:1"></div><div class="mtag">암체어 — LOOK 3</div><div class="ph" style="flex:1"></div><div class="mtag">미러 존 — LOOK 4</div></div>
+            <div class="mcol"><div class="ph" style="flex:1"></div><div class="mtag">커튼 존</div><div class="ph" style="flex:1"></div><div class="mtag">자연광 존</div></div>
+          </div>
+        </div>
+        <div class="mcap">스튜디오 공간별 무드 분석 + 룩 매칭</div>
+      </div>
+      <!-- mock 2: look page -->
+      <div>
+        <div class="mock">
+          <div class="mh"><i>PLANBOOK</i><b>② LOOK 1 — 블랙</b></div>
+          <div class="mrow">
+            <div class="mcol" style="flex:.9">
+              <div class="mbox"><div class="mtag" style="color:var(--tan)">OUTFIT</div><div class="mline"></div><div class="mline" style="width:80%"></div><div class="mline" style="width:88%"></div></div>
+              <div class="mbox dark"><div class="mtag" style="color:#D8C6AE">STYLING — 조끼·핏·헤어</div><div class="mline"></div><div class="mline" style="width:76%"></div></div>
+              <div class="mbox"><div class="mtag" style="color:var(--tan)">POSE 요청컷</div><div class="mline"></div><div class="mline" style="width:70%"></div></div>
+            </div>
+            <div class="mcol" style="flex:1.4"><div class="ph" style="flex:2"></div><div class="mrow" style="flex:1"><div class="ph" style="flex:1"></div><div class="ph" style="flex:1"></div></div></div>
+          </div>
+        </div>
+        <div class="mcap">룩별 의상·조끼 여부·헤어까지 지정</div>
+      </div>
+      <!-- mock 3: couple pose -->
+      <div>
+        <div class="mock">
+          <div class="mh"><i>PLANBOOK</i><b>⑥ 커플 포즈 보드</b></div>
+          <div class="mrow">
+            <div class="mcol"><div class="ph" style="flex:1"></div><div class="mtag">① 정면 대칭</div><div class="ph" style="flex:1"></div><div class="mtag">⑤ 벤치 나란히</div></div>
+            <div class="mcol"><div class="ph" style="flex:1"></div><div class="mtag">② 손 잡아끌기</div><div class="ph" style="flex:1"></div><div class="mtag">⑥ 창가 레이어</div></div>
+            <div class="mcol"><div class="ph" style="flex:1"></div><div class="mtag">④ 백허그</div><div class="ph" style="flex:1"></div><div class="mtag">⑧ 로우앵글</div></div>
+          </div>
+        </div>
+        <div class="mcap">저장한 레퍼런스를 우리 스튜디오 공간에 매핑</div>
+      </div>
+      <!-- mock 4: day ops -->
+      <div>
+        <div class="mock">
+          <div class="mh"><i>PLANBOOK</i><b>⑧ 당일 운영 가이드</b></div>
+          <div class="mrow">
+            <div class="mcol"><div class="mbox"><div class="mtag" style="color:var(--tan)">TIMELINE</div><div class="mline"></div><div class="mline" style="width:85%"></div><div class="mline" style="width:78%"></div><div class="mline" style="width:88%"></div></div></div>
+            <div class="mcol"><div class="mbox"><div class="mtag" style="color:var(--tan)">준비물</div><div class="mline"></div><div class="mline" style="width:72%"></div></div><div class="mbox dark"><div class="mtag" style="color:#D8C6AE">상담 질문 10</div><div class="mline"></div><div class="mline" style="width:80%"></div></div></div>
+          </div>
+        </div>
+        <div class="mcap">의상 체인지 순서 · 준비물 · 상담 질문 리스트</div>
+      </div>
+      <!-- mock 5: flower -->
+      <div>
+        <div class="mock">
+          <div class="mh"><i>PLANBOOK</i><b>⑨ 플라워 디렉션</b></div>
+          <div class="mrow">
+            <div class="mcol" style="flex:.9">
+              <div class="mbox"><div class="mtag" style="color:var(--tan)">FLOWER RULE — 존별 톤</div><div class="mline"></div><div class="mline" style="width:82%"></div><div class="mline" style="width:74%"></div></div>
+              <div class="mbox dark"><div class="mtag" style="color:#D8C6AE">부토니에 &amp; 확인사항</div><div class="mline"></div><div class="mline" style="width:70%"></div></div>
+            </div>
+            <div class="mcol" style="flex:1.3"><div class="ph" style="flex:2"></div><div class="mrow" style="flex:1"><div class="ph" style="flex:1"></div><div class="ph" style="flex:1"></div></div><div class="mtag">부케 · 화기 소품 · 흑백용 꽃</div></div>
+          </div>
+        </div>
+        <div class="mcap">존별 부케 톤 규칙 — 흑백 컷에 강한 꽃까지 지정</div>
+      </div>
+    </div>
+    <div class="pglist">
+      <div class="pg"><i>P.02</i><b>스튜디오 존 맵</b><span>공간별 무드·조명 분석과 룩 매칭</span></div>
+      <div class="pg"><i>P.03–06</i><b>룩 플랜 4세트</b><span>드레스와 밸런스를 맞춘 신랑 예복 — 색·핏·조끼·헤어까지</span></div>
+      <div class="pg"><i>P.07</i><b>커플 포즈 보드</b><span>두 사람이 저장한 레퍼런스 8컷을 존별로 이식</span></div>
+      <div class="pg"><i>P.08</i><b>신랑 단독 포즈</b><span>포즈 8종 치트시트 + 최종 체크리스트</span></div>
+      <div class="pg"><i>P.09</i><b>당일 운영 가이드</b><span>의상 순서·준비물·스튜디오 질문 10</span></div>
+      <div class="pg"><i>P.10</i><b>플라워 디렉션</b><span>존별 부케 톤 규칙·흑백용 꽃·부토니에</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section style="background:#F3EDE2">
+  <div class="wrap">
+    <div class="eyebrow">HOW IT WORKS</div>
+    <h2>신청부터 전달까지, 세 단계</h2>
+    <div style="height:10px"></div>
+    <div class="steps">
+      <div class="step"><span class="no">1</span><div><b>신청서 작성 (5분)</b><span>스튜디오 이름 + 저장해둔 캡처(또는 인스타 링크) + 취향 키워드를 폼으로 보내주세요.</span></div></div>
+      <div class="step"><span class="no">2</span><div><b>화보 분석 (AI + 에디터)</b><span>해당 스튜디오의 공개 화보 무드를 분석하고, 보내주신 취향과 교차해 룩·포즈를 설계합니다.</span></div></div>
+      <div class="step"><span class="no">3</span><div><b>24시간 내 PDF 전달</b><span>10페이지 플랜북을 이메일/카카오톡으로 받아보세요. 예복샵·스튜디오 상담에 바로 쓸 수 있어요.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">MAKER'S NOTE</div>
+    <h2>제 결혼 준비에서 시작됐어요</h2>
+    <div style="height:10px"></div>
+    <div class="story">
+      <div class="who"><img src="img/easylogger.png" alt="이지로거"><div><b>이지로거</b><span>Easy Log · 결혼 준비 기록 중 · Jicloud.Studio 운영</span></div></div>
+      <p>스튜디오를 계약하고 나니 막막했습니다. 신부 드레스 정보는 넘치는데 <b>"이 스튜디오에서 신랑은 뭘 입지?"</b>에 답해주는 곳이 없더라고요. 그래서 스튜디오 화보 100여 컷을 전부 분석해서 존별 예복·포즈·당일 순서까지 정리한 플랜북을 직접 만들었고 — 예복샵과 스튜디오 상담이 완전히 달라졌습니다. 거기에 커플 포즈 보드와 부케 플랜까지 더하니 두 사람의 촬영 계획이 문서 하나로 끝났어요. 그 과정을 그대로 서비스로 만든 게 이지플랜북입니다. 저희 커플이 실제 촬영 준비에 쓰는 방식 그대로 만들어 드려요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section id="apply" style="background:#F3EDE2">
+  <div class="wrap">
+    <div class="eyebrow">EDITIONS</div>
+    <h2>준비 단계에 맞는 두 가지 에디션</h2>
+    <p class="lead">드레스를 아직 안 골랐다면 신부 에디션부터, 스튜디오가 정해졌다면 커플 에디션부터. 두 개를 함께 하면 드레스 확정본이 플랜북에 그대로 반영됩니다.</p>
+    <div class="skus">
+      <div class="sku">
+        <div class="tag">BRIDE EDITION</div>
+        <h3>드레스 셀렉 가이드</h3>
+        <div class="for">드레스 투어·셀렉을 앞둔 신부님께 · 8페이지 PDF</div>
+        <div class="amt">9,900<small>원</small></div>
+        <ul>
+          <li>내가 고른 드레스샵의 공식 화보 라인 분석</li>
+          <li>취향 무드보드 + 우선 피팅 요청 스타일 3</li>
+          <li>체형·톤 가이드 + 가봉·셀렉 체크리스트</li>
+          <li>촬영용 vs 본식용 셀렉 기준 + 샵 질문 10</li>
+          <li>헤어&amp;메이크업 디렉션 (요청 키워드 포함)</li>
+        </ul>
+        <a class="cta alt" href="mailto:jicloud.studio@gmail.com?subject=%5B%EC%9D%B4%EC%A7%80%ED%94%8C%EB%9E%9C%EB%B6%81%5D%20%EC%8B%A0%EB%B6%80%20%EC%97%90%EB%94%94%EC%85%98%20%EC%8B%A0%EC%B2%AD">신부 에디션 신청</a>
+      </div>
+      <div class="sku hero-sku">
+        <div class="tag">COUPLE EDITION</div>
+        <h3>촬영 플랜북</h3>
+        <div class="for">스튜디오 촬영을 앞둔 두 분께 · 10페이지 PDF</div>
+        <div class="amt">9,900<small>원</small></div>
+        <ul>
+          <li>스튜디오 존 분석 + 룩 플랜 4세트 (조끼·핏·헤어)</li>
+          <li>커플 포즈 보드 + 단독 포즈 치트시트</li>
+          <li>당일 운영 가이드 + 상담 질문 리스트</li>
+          <li>플라워 디렉션 (부케·부토니에 플랜)</li>
+          <li>전달 후 1회 무료 수정 (드레스 확정 반영 등)</li>
+        </ul>
+        <a class="cta" href="mailto:jicloud.studio@gmail.com?subject=%5B%EC%9D%B4%EC%A7%80%ED%94%8C%EB%9E%9C%EB%B6%81%5D%20%EC%BB%A4%ED%94%8C%20%EC%97%90%EB%94%94%EC%85%98%20%EC%8B%A0%EC%B2%AD">커플 에디션 신청</a>
+      </div>
+    </div>
+    <div class="bundle">
+      <div class="bi"><b>번들 — 두 에디션 함께</b><span>드레스 셀렉 가이드로 먼저 고르고, 확정된 드레스를 반영한 촬영 플랜북까지. 순서대로 제작해 드려요.</span></div>
+      <div class="bp"><s>19,800</s>14,900원</div>
+    </div>
+    <div style="font-size:11.5px;color:var(--sub);margin-top:12px;text-align:center">1회 제작 · VAT 포함 · 24시간 내 전달 · 결제는 신청 확인 후 안내드립니다 (제작 시작 후에는 환불이 어려워요)</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">FAQ</div>
+    <h2>자주 묻는 질문</h2>
+    <div style="height:12px"></div>
+    <details><summary>아무 스튜디오·드레스샵이나 가능한가요?</summary><div class="a">네. 공식 채널(홈페이지·공식 인스타그램)에 공개된 화보가 있는 곳이라면 어디든 가능합니다. 분석은 공식 공개 자료와 보내주신 레퍼런스만 사용해요. 화보가 적은 곳은 신청 시 미리 알려드리고, 레퍼런스 비중을 높여 제작합니다.</div></details>
+    <details><summary>캡처는 어떻게 보내나요?</summary><div class="a">신청 폼에서 이미지 파일을 올리거나, 마음에 들었던 게시물 링크를 붙여넣으면 됩니다. 몇 장이든 좋지만 5~15장이 가장 좋아요.</div></details>
+    <details><summary>보내는 캡처의 저작권은 문제 없나요?</summary><div class="a">플랜북은 여러분 개인의 촬영 준비·상담용 자료로만 제공됩니다. 저희는 캡처에서 스타일 정보(색·핏·구도)를 분석하는 데 사용하고, 분석이 끝나면 파일을 즉시 삭제합니다. 완성된 플랜북을 SNS 등에 재배포하는 것은 삼가주세요.</div></details>
+    <details><summary>업로드한 사진과 개인정보는 어떻게 처리되나요?</summary><div class="a">업로드 이미지는 플랜북 제작 목적으로만 사용하고 <b>전달 완료 후 즉시 파기</b>합니다. 자세한 내용은 하단 개인정보처리방침을 확인해주세요.</div></details>
+    <details><summary>환불 규정이 궁금해요</summary><div class="a">디지털 맞춤 제작물 특성상 <b>제작 시작 후에는 청약철회(환불)가 어렵습니다</b>. 제작 시작 전에는 전액 환불되며, 결과물에 오류가 있으면 무상으로 수정해 드립니다. 결제 전 안내 페이지에서 다시 한번 고지해 드려요.</div></details>
+    <details><summary>정말 24시간 안에 오나요?</summary><div class="a">신청이 몰리는 경우 최대 48시간까지 걸릴 수 있고, 이 경우 미리 연락드립니다. 촬영일이 임박했다면 신청 시 메모에 남겨주세요 — 우선 처리해 드립니다.</div></details>
+    <details><summary>신부 준비에도 도움이 되나요?</summary><div class="a">네. 플랜북은 예비부부 공용 문서예요. 커플 포즈 보드, 존별 동선, 부케·플라워 디렉션, 드레스와 밸런스를 맞춘 신랑 룩 설계까지 — 두 분이 함께 보면서 촬영 컨셉을 정리하는 용도로 만들어집니다. 신청 시 드레스 사진(또는 후보)을 함께 보내주시면 룩 매칭 정확도가 올라가요.</div></details>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="flogo"><img src="img/easylogger.png" alt="">이지플랜북 <span style="font-weight:400;font-size:11px;color:rgba(250,247,240,.5)">by 이지로거</span></div>
+    <div>
+      지클라우드스튜디오 (Jicloud.Studio) · jicloud.studio@gmail.com<br>
+      사업자등록번호 575-14-02979 · 통신판매업 신고 완료
+    </div>
+    <details style="margin-top:6px">
+      <summary style="cursor:pointer">사업자 정보 전체보기 +</summary>
+      <div class="fd">대표자 이지운 · 소재지 서울특별시 용산구 원효로40, 103동 1402호<br>(전자상거래법 제13조에 따른 통신판매업자 신원정보 표시)</div>
+    </details>
+    <div class="links">
+      <a href="terms.html">이용약관</a>
+      <a href="privacy.html">개인정보처리방침</a>
+      <a href="https://blog.naver.com/watcher119" target="_blank">이지로거 블로그</a>
+    </div>
+    <div class="ai">본 서비스의 플랜북은 생성형 AI 분석을 기반으로 제작된 문서이며, 촬영 결과를 보장하지 않는 참고용 가이드입니다. 플랜북은 특정 스튜디오와 제휴·무관하게 개인 상담용으로 제작됩니다.</div>
+  </div>
+</footer>
+
+</body>
+</html>
