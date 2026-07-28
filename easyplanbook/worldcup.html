@@ -25,6 +25,8 @@
   .card:active{transform:scale(.97)}
   .card:hover{border-color:var(--ink);box-shadow:0 10px 26px rgba(43,39,36,.1)}
   .card svg{width:100%;height:auto;display:block}
+  .card .cimg{width:100%;aspect-ratio:3/4;background-position:center top;background-size:cover;border-radius:10px;background-color:#EDE6D8}
+  .winimg{width:170px;aspect-ratio:3/4;background-position:center top;background-size:cover;border-radius:12px;margin:0 auto 14px}
   .card b{display:block;font-size:13.5px;font-weight:800;margin-top:8px}
   .card span{display:block;font-size:10.5px;color:var(--sub);margin-top:2px}
   .prog{height:4px;background:#EDE6D8;border-radius:99px;margin:22px auto 0;max-width:280px;overflow:hidden}
@@ -52,12 +54,12 @@
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="logo"><img src="img/easylogger.png" alt=""><div>드레스 취향 월드컵<small>EASYPLANBOOK · 자체 일러스트</small></div></div></div></header>
+<header><div class="wrap"><div class="logo"><img src="img/easylogger.png" alt=""><div>드레스 취향 월드컵<small>EASYPLANBOOK · AI 스타일 카드</small></div></div></div></header>
 
 <div class="wrap stage" id="app"></div>
 
 <footer class="wrap">
-  모든 일러스트는 이지플랜북 자체 제작입니다 · <a href="index.html">이지플랜북 알아보기</a><br>
+  카드 이미지는 AI로 생성된 스타일 예시입니다 (실제 판매 드레스가 아닙니다) · <a href="index.html">이지플랜북 알아보기</a><br>
   지클라우드스튜디오 · 결과는 참고용 취향 분석입니다
 </footer>
 
@@ -109,22 +111,22 @@ function dressSVG(p){
 /* ---------- 16 style cards ---------- */
 // axes: sil: V(볼륨)/L(슬림) · det: M(미니멀)/C(꾸뛰르) · mood: K(클래식)/N(모던)
 const CARDS=[
- {n:'클래식 새틴 볼가운', d:'광택 새틴 · 정석 실루엣', p:{sil:'ball',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
- {n:'미카도 구조 볼가운', d:'매트 미카도 · 조형적 라인', p:{sil:'ball',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
- {n:'로맨틱 레이스 볼가운', d:'샹티 레이스 · 부드러운 볼륨', p:{sil:'ball',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
- {n:'글리터 비즈 볼가운', d:'비즈 반짝임 · 드라마틱', p:{sil:'ball',neck:'straight',det:'bead',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
- {n:'태피터 A라인', d:'구김 광택 · 클래식 무드', p:{sil:'aline',neck:'straight',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
- {n:'오프숄더 미니멀 A라인', d:'어깨 라인 · 담백한 원단', p:{sil:'aline',neck:'off',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
- {n:'플로럴 아플리케 A라인', d:'입체 플라워 · 러블리', p:{sil:'aline',neck:'sweet',det:'floral',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
- {n:'시어 레이어 A라인', d:'오간자 겹 · 에디토리얼', p:{sil:'aline',neck:'straight',det:'lace',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
- {n:'카울넥 슬립', d:'흐르는 새틴 · 미니멀', p:{sil:'slip',neck:'cowl',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'N'}},
- {n:'홀터넥 새틴 슬립', d:'목선 강조 · 클래식 미니멀', p:{sil:'slip',neck:'halter',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
- {n:'비즈 슬립', d:'섬세한 반짝임 · 파티 무드', p:{sil:'slip',neck:'straight',det:'bead',sheen:'matte'}, ax:{S:'L',D:'C',M:'N'}},
- {n:'빈티지 레이스 슬립', d:'전체 레이스 · 로맨틱', p:{sil:'slip',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
- {n:'크레이프 머메이드', d:'매트 원단 · 순수 라인', p:{sil:'mermaid',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'L',D:'M',M:'N'}},
- {n:'스위트하트 머메이드', d:'클래식 글램 · 우아함', p:{sil:'mermaid',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
- {n:'샹티레이스 머메이드', d:'레이스 바디라인 · 고전미', p:{sil:'mermaid',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
- {n:'비즈 머메이드', d:'조각 같은 반짝임 · 시크', p:{sil:'mermaid',neck:'halter',det:'bead',sheen:'gloss'}, ax:{S:'L',D:'C',M:'N'}},
+ {img:'01', n:'클래식 새틴 볼가운', d:'광택 새틴 · 정석 실루엣', p:{sil:'ball',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
+ {img:'02', n:'미카도 구조 볼가운', d:'매트 미카도 · 조형적 라인', p:{sil:'ball',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
+ {img:'03', n:'로맨틱 레이스 볼가운', d:'샹티 레이스 · 부드러운 볼륨', p:{sil:'ball',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
+ {img:'04', n:'글리터 비즈 볼가운', d:'비즈 반짝임 · 드라마틱', p:{sil:'ball',neck:'straight',det:'bead',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
+ {img:'05', n:'태피터 A라인', d:'구김 광택 · 클래식 무드', p:{sil:'aline',neck:'straight',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
+ {img:'06', n:'오프숄더 미니멀 A라인', d:'어깨 라인 · 담백한 원단', p:{sil:'aline',neck:'off',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
+ {img:'07', n:'플로럴 아플리케 A라인', d:'입체 플라워 · 러블리', p:{sil:'aline',neck:'sweet',det:'floral',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
+ {img:'08', n:'시어 레이어 A라인', d:'오간자 겹 · 에디토리얼', p:{sil:'aline',neck:'straight',det:'lace',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
+ {img:'09', n:'브이넥 실크 슬립', d:'흐르는 실크 · 미니멀', p:{sil:'slip',neck:'cowl',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'N'}},
+ {img:'10', n:'홀터넥 새틴 슬립', d:'목선 강조 · 클래식 미니멀', p:{sil:'slip',neck:'halter',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
+ {img:'11', n:'비즈 슬립', d:'섬세한 반짝임 · 파티 무드', p:{sil:'slip',neck:'straight',det:'bead',sheen:'matte'}, ax:{S:'L',D:'C',M:'N'}},
+ {img:'12', n:'빈티지 레이스 슬립', d:'전체 레이스 · 로맨틱', p:{sil:'slip',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
+ {img:'13', n:'크레이프 머메이드', d:'매트 원단 · 순수 라인', p:{sil:'mermaid',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'L',D:'M',M:'N'}},
+ {img:'14', n:'스위트하트 머메이드', d:'클래식 글램 · 우아함', p:{sil:'mermaid',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
+ {img:'15', n:'샹티레이스 머메이드', d:'레이스 바디라인 · 고전미', p:{sil:'mermaid',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
+ {img:'16', n:'비즈 머메이드', d:'조각 같은 반짝임 · 시크', p:{sil:'mermaid',neck:'halter',det:'bead',sheen:'gloss'}, ax:{S:'L',D:'C',M:'N'}},
 ];
 
 /* ---------- 8 taste types ---------- */
@@ -143,7 +145,7 @@ const TYPES={
 const app=document.getElementById('app');
 let deck=[], next=[], round=16, score={S:{V:0,L:0},D:{M:0,C:0},M:{K:0,N:0}}, total=0, matches=0;
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function start(){deck=shuffle([...CARDS]);next=[];round=16;score={S:{V:0,L:0},D:{M:0,C:0},M:{K:0,N:0}};total=0;matches=0;render();}
+function start(){ CARDS.forEach(c=>{const im=new Image(); im.src='img/cards/'+c.img+'.jpg';});deck=shuffle([...CARDS]);next=[];round=16;score={S:{V:0,L:0},D:{M:0,C:0},M:{K:0,N:0}};total=0;matches=0;render();}
 function weight(){return round===16?1:round===8?2:round===4?3:5;}
 function pick(i){
   const w=weight(), c=deck[i];
@@ -162,8 +164,8 @@ function render(){
    <p class="q">직감으로 골라주세요 — ${done+1} / ${tot}</p>
    <div class="vs">
      <span class="badge-vs">VS</span>
-     <div class="card" onclick="pick(0)">${dressSVG(a.p)}<b>${a.n}</b><span>${a.d}</span></div>
-     <div class="card" onclick="pick(1)">${dressSVG(b.p)}<b>${b.n}</b><span>${b.d}</span></div>
+     <div class="card" onclick="pick(0)"><div class="cimg" style="background-image:url('img/cards/${a.img}.jpg')"></div><b>${a.n}</b><span>${a.d}</span></div>
+     <div class="card" onclick="pick(1)"><div class="cimg" style="background-image:url('img/cards/${b.img}.jpg')"></div><b>${b.n}</b><span>${b.d}</span></div>
    </div>
    <div class="prog"><i style="width:${done/tot*100}%"></i></div>`;
   window.scrollTo({top:0});
@@ -178,7 +180,7 @@ function result(winner){
     <div class="type-tag">MY DRESS TYPE</div>
     <div class="type-name"><em>${t.name}</em></div>
     <p class="type-desc">${t.desc}</p>
-    <div style="max-width:170px;margin:0 auto 16px">${dressSVG(winner.p)}</div>
+    <div class="winimg" style="background-image:url('img/cards/${winner.img}.jpg')"></div>
     <p style="font-size:11.5px;color:var(--sub);margin-bottom:16px">최종 선택 — ${winner.n}</p>
     <div class="axes">
       <div class="ax"><div class="lb"><span>볼륨 실루엣</span><span>슬림 실루엣</span></div><div class="bar"><i style="width:${sp}%"></i></div></div>
