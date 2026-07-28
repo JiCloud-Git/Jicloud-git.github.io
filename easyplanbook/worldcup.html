@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>드레스 취향 월드컵 — 이지플랜북</title>
+<meta name="description" content="1분 만에 끝나는 드레스 취향 테스트. 16개 스타일 중 당신의 선택이 말해주는 드레스 성향을 알려드려요.">
+<link rel="icon" href="img/easylogger.png">
+<style>
+  :root{--bg:#FAF7F0;--ink:#2B2724;--sub:#6E655B;--tan:#8A6F55;--line:#E2D9CA;--yellow:#F6DE79}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Apple SD Gothic Neo","Pretendard",-apple-system,sans-serif;background:var(--bg);color:var(--ink);word-break:keep-all;overflow-wrap:break-word;line-height:1.6;min-height:100vh}
+  .wrap{max-width:640px;margin:0 auto;padding:0 18px}
+  header{padding:16px 0;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:15px}
+  .logo img{width:26px;height:26px;border-radius:50%}
+  .logo small{font-weight:600;font-size:9.5px;color:var(--tan);display:block;letter-spacing:.06em}
+  .stage{padding:26px 0 60px;text-align:center}
+  .round{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.2em;color:var(--tan);border:1px solid var(--tan);border-radius:99px;padding:4px 14px;margin-bottom:10px}
+  h1{font-size:clamp(22px,6vw,30px);font-weight:900;line-height:1.3;margin-bottom:6px}
+  .q{font-size:13.5px;color:var(--sub);margin-bottom:20px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative}
+  .vs .badge-vs{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);background:var(--ink);color:#FAF7F0;font-family:"Times New Roman",serif;font-size:12px;letter-spacing:.1em;padding:6px 10px;border-radius:99px;z-index:2;pointer-events:none}
+  .card{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 10px 16px;cursor:pointer;transition:transform .12s, border-color .12s, box-shadow .12s}
+  .card:active{transform:scale(.97)}
+  .card:hover{border-color:var(--ink);box-shadow:0 10px 26px rgba(43,39,36,.1)}
+  .card svg{width:100%;height:auto;display:block}
+  .card b{display:block;font-size:13.5px;font-weight:800;margin-top:8px}
+  .card span{display:block;font-size:10.5px;color:var(--sub);margin-top:2px}
+  .prog{height:4px;background:#EDE6D8;border-radius:99px;margin:22px auto 0;max-width:280px;overflow:hidden}
+  .prog i{display:block;height:100%;background:var(--tan);border-radius:99px;transition:width .3s}
+  /* intro & result */
+  .panel{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:30px 22px;text-align:center}
+  .type-tag{font-size:11px;font-weight:800;letter-spacing:.22em;color:var(--tan);margin-bottom:8px}
+  .type-name{font-size:clamp(24px,6.6vw,32px);font-weight:900;margin-bottom:6px}
+  .type-name em{font-style:normal;box-shadow:inset 0 -0.4em 0 var(--yellow)}
+  .type-desc{font-size:13.5px;color:#55493E;line-height:1.75;margin-bottom:20px}
+  .axes{max-width:360px;margin:0 auto 22px;text-align:left}
+  .ax{margin-bottom:10px}
+  .ax .lb{display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;color:var(--sub);margin-bottom:3px}
+  .ax .bar{height:7px;background:#EDE6D8;border-radius:99px;overflow:hidden;display:flex}
+  .ax .bar i{display:block;height:100%;background:var(--ink);border-radius:99px 0 0 99px}
+  .reco{background:#F3EDE2;border-radius:12px;padding:14px 16px;text-align:left;margin-bottom:22px}
+  .reco h4{font-size:11px;letter-spacing:.16em;color:var(--tan);font-weight:800;margin-bottom:6px}
+  .reco li{font-size:13px;line-height:1.7;color:#3E362E;list-style:none;padding-left:16px;position:relative}
+  .reco li::before{content:"✓";position:absolute;left:0;color:var(--tan);font-weight:900}
+  .cta{display:inline-block;background:var(--ink);color:#FAF7F0;font-size:15px;font-weight:800;padding:15px 24px;border-radius:13px;text-decoration:none;width:100%;max-width:340px}
+  .cta.y{background:var(--yellow);color:var(--ink)}
+  .sub-act{display:block;margin-top:12px;font-size:12.5px;color:var(--tan);font-weight:700;cursor:pointer;background:none;border:none}
+  footer{padding:26px 0 40px;text-align:center;font-size:10.5px;color:#9A8F80;line-height:1.7}
+  footer a{color:var(--tan)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="logo"><img src="img/easylogger.png" alt=""><div>드레스 취향 월드컵<small>EASYPLANBOOK · 자체 일러스트</small></div></div></div></header>
+
+<div class="wrap stage" id="app"></div>
+
+<footer class="wrap">
+  모든 일러스트는 이지플랜북 자체 제작입니다 · <a href="index.html">이지플랜북 알아보기</a><br>
+  지클라우드스튜디오 · 결과는 참고용 취향 분석입니다
+</footer>
+
+<script>
+/* ---------- SVG dress illustrator ---------- */
+function dressSVG(p){
+  // p: {sil: ball|aline|slip|mermaid, neck: straight|sweet|cowl|halter|off, det: none|bead|lace|floral, sheen: matte|gloss}
+  const W=200,H=250, cx=100;
+  let bodice='', skirt='', neckline='', extra='', defs='';
+  const ink='#2B2724', tan='#8A6F55';
+  const fill = p.sheen==='gloss' ? 'url(#g1)' : '#FDFBF6';
+  defs = `<defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#F3EDE0"/><stop offset="1" stop-color="#FDFBF6"/></linearGradient></defs>`;
+  // necklines (top edge of bodice) y=58 base, shoulders x 68..132
+  if(p.neck==='straight') neckline=`M68,62 L132,62`;
+  if(p.neck==='sweet')    neckline=`M68,62 Q84,50 100,62 Q116,50 132,62`;
+  if(p.neck==='cowl')     neckline=`M68,58 Q100,80 132,58`;
+  if(p.neck==='halter')   neckline=`M78,66 Q100,54 122,66 M90,60 L100,38 L110,60`;
+  if(p.neck==='off')      neckline=`M60,70 Q100,58 140,70 M56,78 Q68,64 80,72 M120,72 Q132,64 144,78`;
+  // bodice 62->118
+  bodice=`M70,62 C68,84 72,104 78,118 L122,118 C128,104 132,84 130,62`;
+  // skirts from waist y118
+  if(p.sil==='ball')    skirt=`M78,118 C40,150 26,208 30,232 L170,232 C174,208 160,150 122,118`;
+  if(p.sil==='aline')   skirt=`M78,118 C58,156 48,206 52,232 L148,232 C152,206 142,156 122,118`;
+  if(p.sil==='slip')    skirt=`M78,118 C74,160 72,204 78,232 L122,232 C128,204 126,160 122,118`;
+  if(p.sil==='mermaid') skirt=`M78,118 C80,150 84,172 76,192 C68,214 60,224 66,232 L134,232 C140,224 132,214 124,192 C116,172 120,150 122,118`;
+  // details
+  if(p.det==='bead'){ let d=''; for(let i=0;i<28;i++){ const x=76+(i*37)%52, y=66+(i*23)%48; d+=`<circle cx="${x}" cy="${y}" r="1.6" fill="${tan}"/>`; }
+    for(let i=0;i<22;i++){ const x=70+(i*41)%62, y=132+(i*31)%86; d+=`<circle cx="${x}" cy="${y}" r="1.3" fill="${tan}" opacity=".7"/>`; } extra+=d; }
+  if(p.det==='lace'){ let d=''; for(let i=0;i<7;i++){ const x=72+i*8.6; d+=`<path d="M${x},118 q4,-6 8,0" fill="none" stroke="${tan}" stroke-width="1.2"/>`;}
+    for(let i=0;i<9;i++){ const x=58+i*10; d+=`<path d="M${x},228 q5,-7 10,0" fill="none" stroke="${tan}" stroke-width="1.2"/>`;}
+    d+=`<path d="M74,76 q6,8 0,16 M126,76 q-6,8 0,16 M100,66 q5,9 0,18 M86,88 q5,7 0,14 M114,88 q-5,7 0,14" fill="none" stroke="${tan}" stroke-width="1.2"/>`;
+    d+=`<path d="M84,150 q6,9 0,18 M116,150 q-6,9 0,18 M100,170 q6,9 0,18" fill="none" stroke="${tan}" stroke-width="1" opacity=".65"/>`; extra+=d; }
+  if(p.det==='floral'){ let d=''; const pts=[[84,80],[112,72],[98,100],[120,96],[80,104]]; for(const[x,y] of pts){ d+=`<g fill="none" stroke="${tan}" stroke-width="1.1"><circle cx="${x}" cy="${y}" r="2.2"/><circle cx="${x+5}" cy="${y+2}" r="1.4"/><circle cx="${x-4}" cy="${y+4}" r="1.2"/></g>`; } extra+=d; }
+  // sheen line on skirt
+  const shine = p.sheen==='gloss' ? `<path d="M92,128 C86,160 84,196 88,226" stroke="#FFFFFF" stroke-width="5" opacity=".8" fill="none"/>` : '';
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${defs}
+    <rect width="${W}" height="${H}" fill="none"/>
+    <g stroke="${ink}" stroke-width="1.6" fill="${fill}">
+      <path d="${skirt}"/>
+      <path d="${bodice}"/>
+    </g>
+    ${shine}
+    <path d="${neckline}" fill="none" stroke="${ink}" stroke-width="1.6"/>
+    ${extra}
+  </svg>`;
+}
+
+/* ---------- 16 style cards ---------- */
+// axes: sil: V(볼륨)/L(슬림) · det: M(미니멀)/C(꾸뛰르) · mood: K(클래식)/N(모던)
+const CARDS=[
+ {n:'클래식 새틴 볼가운', d:'광택 새틴 · 정석 실루엣', p:{sil:'ball',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
+ {n:'미카도 구조 볼가운', d:'매트 미카도 · 조형적 라인', p:{sil:'ball',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
+ {n:'로맨틱 레이스 볼가운', d:'샹티 레이스 · 부드러운 볼륨', p:{sil:'ball',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
+ {n:'글리터 비즈 볼가운', d:'비즈 반짝임 · 드라마틱', p:{sil:'ball',neck:'straight',det:'bead',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
+ {n:'태피터 A라인', d:'구김 광택 · 클래식 무드', p:{sil:'aline',neck:'straight',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
+ {n:'오프숄더 미니멀 A라인', d:'어깨 라인 · 담백한 원단', p:{sil:'aline',neck:'off',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
+ {n:'플로럴 아플리케 A라인', d:'입체 플라워 · 러블리', p:{sil:'aline',neck:'sweet',det:'floral',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
+ {n:'시어 레이어 A라인', d:'오간자 겹 · 에디토리얼', p:{sil:'aline',neck:'straight',det:'lace',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
+ {n:'카울넥 슬립', d:'흐르는 새틴 · 미니멀', p:{sil:'slip',neck:'cowl',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'N'}},
+ {n:'홀터넥 새틴 슬립', d:'목선 강조 · 클래식 미니멀', p:{sil:'slip',neck:'halter',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
+ {n:'비즈 슬립', d:'섬세한 반짝임 · 파티 무드', p:{sil:'slip',neck:'straight',det:'bead',sheen:'matte'}, ax:{S:'L',D:'C',M:'N'}},
+ {n:'빈티지 레이스 슬립', d:'전체 레이스 · 로맨틱', p:{sil:'slip',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
+ {n:'크레이프 머메이드', d:'매트 원단 · 순수 라인', p:{sil:'mermaid',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'L',D:'M',M:'N'}},
+ {n:'스위트하트 머메이드', d:'클래식 글램 · 우아함', p:{sil:'mermaid',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
+ {n:'샹티레이스 머메이드', d:'레이스 바디라인 · 고전미', p:{sil:'mermaid',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
+ {n:'비즈 머메이드', d:'조각 같은 반짝임 · 시크', p:{sil:'mermaid',neck:'halter',det:'bead',sheen:'gloss'}, ax:{S:'L',D:'C',M:'N'}},
+];
+
+/* ---------- 8 taste types ---------- */
+const TYPES={
+ 'V-M-K':{name:'클래식 새틴형', desc:'장식보다 정제된 실루엣과 원단의 광으로 완성되는 정석 웨딩 무드. 새틴·태피터 볼륨 라인에서 가장 빛나요.', reco:['새틴·미카도 볼가운, 태피터 A라인 우선 피팅','디테일은 벨트·리본 딱 하나만','베일은 미니멀 롱 베일로 격 완성']},
+ 'V-M-N':{name:'모던 스컬프처형', desc:'매트 미카도의 조형적인 볼륨 — 건축적인 라인을 좋아하는 타입. 구조가 살아있는 드레스가 답이에요.', reco:['미카도·자카드의 구조적 볼가운 우선','넥라인은 스트레이트로 모던하게','액세서리 최소화, 헤어는 슬릭']},
+ 'V-C-K':{name:'로맨틱 꾸뛰르형', desc:'레이스·플로럴의 수공예 디테일과 부드러운 볼륨. 가까이서 볼수록 예쁜 드레스를 사랑하는 타입.', reco:['샹티레이스·플로럴 아플리케 볼가운/A라인','클로즈업 촬영 컷 비중 높이기','부케는 내추럴 스템으로 톤 맞춤']},
+ 'V-C-N':{name:'드라마틱 글램형', desc:'비즈의 반짝임과 큰 실루엣 — 화면을 압도하는 무드. 조명 아래에서 가장 강한 타입이에요.', reco:['비즈·글리터 볼가운 우선 피팅','촬영은 조명 강한 홀·무배경 존에서','주얼리는 과감하게 한 세트']},
+ 'L-M-K':{name:'클래식 미니멀형', desc:'홀터넥 새틴 슬립처럼 목선과 원단으로 승부하는 우아함. 유행을 타지 않는 라인을 찾는 타입.', reco:['새틴 슬립·시스, 홀터/스퀘어넥 우선','헤어 업스타일로 목선 살리기','진주 한 점으로 마무리']},
+ 'L-M-N':{name:'미니멀 에디토리얼형', desc:'카울넥 슬립, 크레이프 머메이드 — 장식 없이 라인과 무드로 완성되는 화보 취향이에요.', reco:['카울넥 슬립·크레이프 머메이드 우선','케이프 베일·시어 레이어로 촬영 변주','흑백 컷 지정 추천']},
+ 'L-C-K':{name:'빈티지 레이스형', desc:'몸을 따라 흐르는 레이스의 고전미. 세월이 지나도 촌스럽지 않은 로맨틱을 아는 타입.', reco:['레이스 슬립·샹티 머메이드 우선','소매·베일도 레이스로 톤온톤','자연광 촬영 비중 높이기']},
+ 'L-C-N':{name:'시크 글램형', desc:'슬림 라인 위의 비즈 — 절제와 화려함의 균형. 파티처럼 빛나되 과하지 않게.', reco:['비즈 슬립·머메이드 우선 피팅','헤어 슬릭, 이어링 포인트','2부 드레스 겸용 셀렉도 고려']},
+};
+
+/* ---------- tournament ---------- */
+const app=document.getElementById('app');
+let deck=[], next=[], round=16, score={S:{V:0,L:0},D:{M:0,C:0},M:{K:0,N:0}}, total=0, matches=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function start(){deck=shuffle([...CARDS]);next=[];round=16;score={S:{V:0,L:0},D:{M:0,C:0},M:{K:0,N:0}};total=0;matches=0;render();}
+function weight(){return round===16?1:round===8?2:round===4?3:5;}
+function pick(i){
+  const w=weight(), c=deck[i];
+  score.S[c.ax.S]+=w; score.D[c.ax.D]+=w; score.M[c.ax.M]+=w; total+=w;
+  next.push(c); deck.splice(0,2); matches++;
+  if(deck.length===0){ if(next.length===1){ result(next[0]); return;} deck=next; next=[]; round=deck.length; }
+  render();
+}
+function render(){
+  if(deck.length<2) return;
+  const [a,b]=deck;
+  const done=matches, tot=15;
+  app.innerHTML=`
+   <span class="round">${round===16?'16강':round===8?'8강':round===4?'준결승':'결승'}</span>
+   <h1>더 끌리는 드레스는?</h1>
+   <p class="q">직감으로 골라주세요 — ${done+1} / ${tot}</p>
+   <div class="vs">
+     <span class="badge-vs">VS</span>
+     <div class="card" onclick="pick(0)">${dressSVG(a.p)}<b>${a.n}</b><span>${a.d}</span></div>
+     <div class="card" onclick="pick(1)">${dressSVG(b.p)}<b>${b.n}</b><span>${b.d}</span></div>
+   </div>
+   <div class="prog"><i style="width:${done/tot*100}%"></i></div>`;
+  window.scrollTo({top:0});
+}
+function pct(x,y){return Math.round(x/(x+y)*100);}
+function result(winner){
+  const key=(score.S.V>=score.S.L?'V':'L')+'-'+(score.D.M>=score.D.C?'M':'C')+'-'+(score.M.K>=score.M.N?'K':'N');
+  const t=TYPES[key];
+  const sp=pct(score.S.V,score.S.L), dp=pct(score.D.M,score.D.C), mp=pct(score.M.K,score.M.N);
+  app.innerHTML=`
+   <div class="panel">
+    <div class="type-tag">MY DRESS TYPE</div>
+    <div class="type-name"><em>${t.name}</em></div>
+    <p class="type-desc">${t.desc}</p>
+    <div style="max-width:170px;margin:0 auto 16px">${dressSVG(winner.p)}</div>
+    <p style="font-size:11.5px;color:var(--sub);margin-bottom:16px">최종 선택 — ${winner.n}</p>
+    <div class="axes">
+      <div class="ax"><div class="lb"><span>볼륨 실루엣</span><span>슬림 실루엣</span></div><div class="bar"><i style="width:${sp}%"></i></div></div>
+      <div class="ax"><div class="lb"><span>미니멀</span><span>꾸뛰르 디테일</span></div><div class="bar"><i style="width:${dp}%"></i></div></div>
+      <div class="ax"><div class="lb"><span>클래식</span><span>모던</span></div><div class="bar"><i style="width:${mp}%"></i></div></div>
+    </div>
+    <div class="reco"><h4>이 타입의 셀렉 방향</h4><ul>${t.reco.map(r=>`<li>${r}</li>`).join('')}</ul></div>
+    <a class="cta y" href="index.html#apply">내 드레스샵 기준 상세 가이드 받기 — 9,900원</a>
+    <button class="sub-act" onclick="share('${t.name}')">결과 복사하기</button>
+    <button class="sub-act" onclick="start()">다시 하기</button>
+   </div>`;
+  window.scrollTo({top:0});
+}
+function share(name){
+  const txt=`나의 드레스 취향은 "${name}" — 1분 테스트 해보기: `+location.href;
+  navigator.clipboard.writeText(txt).then(()=>alert('결과가 복사됐어요! 예비 신부 친구에게 공유해보세요 :)'));
+}
+function intro(){
+  app.innerHTML=`
+   <div class="panel">
+    <div class="type-tag">EASYPLANBOOK</div>
+    <div class="type-name">드레스 취향<br><em>월드컵</em></div>
+    <p class="type-desc">16개 스타일, 15번의 선택.<br>1분이면 당신의 드레스 성향이 나옵니다.<br>결과로 8가지 타입 중 당신의 타입과 셀렉 방향을 알려드려요.</p>
+    <a class="cta" href="javascript:start()">시작하기</a>
+   </div>`;
+}
+intro();
+</script>
+</body>
+</html>
