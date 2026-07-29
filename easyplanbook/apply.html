@@ -166,6 +166,18 @@ const GENERIC=(n)=>`<b>${n}</b>, 좋은 선택이에요! ${n}의 공식 화보�
 const $=id=>document.getElementById(id);
 let edition='bride';
 
+/* 폼 전송 복귀(?sent=1) — 접수 완료 화면 표시 */
+if(qs0().get('sent')==='1'){
+  document.getElementById('form').style.display='none';
+  const d=document.getElementById('done'); d.style.display='block';
+  document.getElementById('doneTitle').textContent='접수 완료! 🎉';
+  document.getElementById('doneDesc').innerHTML='신청과 레퍼런스가 <b>바로 접수</b>됐어요. 확인 후 <b>24시간 안에</b> 결제 안내와 함께 회신드립니다.';
+  document.getElementById('remail').style.display='none';
+  let s=''; try{s=localStorage.getItem('epb_submit_summary')||''; localStorage.removeItem('epb_submit_summary');}catch(e){}
+  document.getElementById('sum').textContent=s||'신청 내용이 접수되었습니다.';
+}
+function qs0(){return new URLSearchParams(location.search);}
+
 /* edition from query */
 const qs=new URLSearchParams(location.search);
 if(qs.get('edition')==='couple') setEdition('couple');
@@ -269,18 +281,36 @@ $('submit').onclick=async()=>{
   $('sum').textContent=body;
   const mailto=`mailto:jicloud.studio@gmail.com?subject=${encodeURIComponent('[이지플랜북] '+(edition==='bride'?'신부':'커플')+' 에디션 신청 — '+name)}&body=${encodeURIComponent(body)}`;
   $('remail').href=mailto;
-  // 직접 전송 시도
+  // 직접 전송 시도 — 첨부 유무로 경로 분기 (AJAX는 첨부를 유실하므로)
   $('submit').disabled=true; $('submit').textContent='보내는 중…';
+  const subj='[이지플랜북] '+(edition==='bride'?'신부':'커플')+' 에디션 신청 — '+name;
+  if(files.length>0){
+    // 압축 후 네이티브 폼 전송 → 완료되면 ?sent=1 로 복귀
+    try{
+      const packed=await Promise.all([...files].slice(0,20).map(compressImage));
+      const totalMB=packed.reduce((s,f)=>s+f.size,0)/1048576;
+      if(totalMB>9){ $('submit').disabled=false; $('submit').textContent='신청 보내기'; return alert('압축 후에도 용량이 커요 ('+totalMB.toFixed(1)+'MB). 장수를 조금 줄여주시면 나머지는 회신 메일로 받아드릴게요!'); }
+      const dt=new DataTransfer(); packed.forEach(f=>dt.items.add(f));
+      try{localStorage.setItem('epb_submit_summary',body);}catch(e){}
+      const form=document.createElement('form');
+      form.method='POST'; form.action='https://formsubmit.co/jicloud.studio@gmail.com';
+      form.enctype='multipart/form-data'; form.style.display='none';
+      const add=(n,v)=>{const inp=document.createElement('input'); inp.type='hidden'; inp.name=n; inp.value=v; form.appendChild(inp);};
+      add('_subject',subj); add('_captcha','false'); add('_template','box');
+      add('_next', location.origin+location.pathname+'?sent=1');
+      add('신청내용',body); add('email',email);
+      const fi=document.createElement('input'); fi.type='file'; fi.name='attachment'; fi.multiple=true; fi.files=dt.files; fi.style.display='none';
+      form.appendChild(fi); document.body.appendChild(form);
+      form.submit();
+      return; // 페이지 이동 — 복귀 시 ?sent=1 처리
+    }catch(e){ /* DataTransfer 미지원 등 → 아래 AJAX로 텍스트만 전송 */ }
+  }
   let sent=false;
   try{
     const fd=new FormData();
-    fd.append('_subject','[이지플랜북] '+(edition==='bride'?'신부':'커플')+' 에디션 신청 — '+name);
+    fd.append('_subject',subj);
     fd.append('_template','box'); fd.append('_captcha','false');
-    fd.append('신청내용',body); fd.append('email',email);
-    const packed=await Promise.all([...files].slice(0,20).map(compressImage));
-    const totalMB=packed.reduce((s,f)=>s+f.size,0)/1048576;
-    if(totalMB>12){ $('submit').disabled=false; $('submit').textContent='신청 보내기'; return alert('압축 후에도 용량이 커요 ('+totalMB.toFixed(1)+'MB). 장수를 조금 줄여주시면 나머지는 회신 메일로 받아드릴게요!'); }
-    packed.forEach(f=>fd.append('attachment', f));
+    fd.append('신청내용',body+(files.length?'\n(첨부 자동전송 실패 — 레퍼런스는 회신 메일로 요청 예정)':'')); fd.append('email',email);
     const res=await fetch(FS_ENDPOINT,{method:'POST',body:fd,headers:{'Accept':'application/json'}});
     const j=await res.json().catch(()=>({}));
     sent = res.ok && (j.success==='true'||j.success===true);
