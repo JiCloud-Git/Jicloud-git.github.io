@@ -290,7 +290,6 @@ $('submit').onclick=async()=>{
       const packed=await Promise.all([...files].slice(0,20).map(compressImage));
       const totalMB=packed.reduce((s,f)=>s+f.size,0)/1048576;
       if(totalMB>9){ $('submit').disabled=false; $('submit').textContent='신청 보내기'; return alert('압축 후에도 용량이 커요 ('+totalMB.toFixed(1)+'MB). 장수를 조금 줄여주시면 나머지는 회신 메일로 받아드릴게요!'); }
-      const dt=new DataTransfer(); packed.forEach(f=>dt.items.add(f));
       try{localStorage.setItem('epb_submit_summary',body);}catch(e){}
       const form=document.createElement('form');
       form.method='POST'; form.action='https://formsubmit.co/jicloud.studio@gmail.com';
@@ -299,8 +298,12 @@ $('submit').onclick=async()=>{
       add('_subject',subj); add('_captcha','false'); add('_template','box');
       add('_next', location.origin+location.pathname+'?sent=1');
       add('신청내용',body); add('email',email);
-      const fi=document.createElement('input'); fi.type='file'; fi.name='attachment'; fi.multiple=true; fi.files=dt.files; fi.style.display='none';
-      form.appendChild(fi); document.body.appendChild(form);
+      packed.forEach((f,i)=>{
+        const dt=new DataTransfer(); dt.items.add(f);
+        const fi=document.createElement('input'); fi.type='file'; fi.name='attachment'+(i+1); fi.files=dt.files; fi.style.display='none';
+        form.appendChild(fi);
+      });
+      document.body.appendChild(form);
       form.submit();
       return; // 페이지 이동 — 복귀 시 ?sent=1 처리
     }catch(e){ /* DataTransfer 미지원 등 → 아래 AJAX로 텍스트만 전송 */ }
