@@ -96,8 +96,20 @@
       </select>
     </div>
 
+    <div class="sec">
+      <h3><span class="no">4</span>촬영 구성을 알려주세요 <small style="font-weight:600;color:var(--sub)">(알면 배분 추천까지)</small></h3>
+      <div class="hint" id="pkgHint">패키지 구성(벌수·야외 여부)에 따라 추천 배분이 달라져요. 모르시면 "모름"으로 — 상담 때 물어볼 질문 리스트에 넣어드립니다.</div>
+      <div id="pkgPreset" style="display:none"></div>
+      <label id="pkgCntLabel">촬영용 드레스 벌수</label>
+      <select id="pkg_cnt"><option value="모름">아직 몰라요</option><option>1벌</option><option>2벌</option><option>3벌</option><option>4벌 이상</option></select>
+      <label>캐주얼·2부 의상</label>
+      <select id="pkg_casual"><option value="모름">아직 몰라요</option><option>포함 (1벌)</option><option>포함 (2벌 이상)</option><option>없음</option></select>
+      <label>야외·가든 촬영</label>
+      <select id="pkg_out"><option value="모름">아직 몰라요</option><option>포함</option><option>없음</option><option>고민 중</option></select>
+    </div>
+
     <div class="sec" id="fitSec">
-      <h3><span class="no">4</span>핏 정보 <small style="font-weight:600;color:var(--sub)">(선택 — 알려주시면 더 정밀해져요)</small></h3>
+      <h3><span class="no">5</span>핏 정보 <small style="font-weight:600;color:var(--sub)">(선택 — 알려주시면 더 정밀해져요)</small></h3>
       <div class="hint">치수는 필요 없어요. 느낌으로 골라주시면 됩니다.</div>
       <label>어깨 라인</label>
       <select id="fit_shoulder"><option value="">선택 안 함</option><option>좁은 편</option><option>보통</option><option>넓은 편</option></select>
@@ -110,7 +122,7 @@
     </div>
 
     <div class="sec">
-      <h3><span class="no">5</span>전달받을 곳</h3>
+      <h3><span class="no">6</span>전달받을 곳</h3>
       <label>성함 또는 닉네임 <small>(필수)</small></label>
       <input type="text" id="name" placeholder="예) 지운, 예신 O O">
       <label>이메일 <small>(필수 — PDF 전달용)</small></label>
@@ -148,7 +160,9 @@
 /* 샵 인사말 DB — 실제 분석 이력이 있는 샵만 구체 문구, 나머지는 범용 */
 const SHOPDB=[
  {k:['셀레브','sesreves','ses reves'], msg:'<b>셀레브를 고르셨군요!</b> 셀레브는 드레이프 텍스처와 유니크한 꾸뛰르 디테일로 많은 신부님이 찾는 청담 디자이너샵이에요. 셀레브의 라인을 기준으로 취향을 분석해 드릴게요.'},
+ // pkg 예시: {k:['샵명'], msg:'…', pkg:['드레스 2벌 + 캐주얼 1벌','드레스 3벌 + 캐주얼 1벌','드레스 2벌 + 야외 포함']} — 실주문으로 검증된 구성만 추가
 ];
+let pkgChoice='';
 const GENERIC=(n)=>`<b>${n}</b>, 좋은 선택이에요! ${n}의 공식 화보를 분석해서 그 샵이 가장 자신 있는 라인 기준으로 가이드를 만들어 드릴게요.`;
 
 const $=id=>document.getElementById(id);
@@ -164,6 +178,7 @@ function setEdition(v){
   $('shopLabel').textContent = v==='bride' ? '드레스샵이 어디인가요?' : '촬영 스튜디오가 어디인가요?';
   $('shop').placeholder = v==='bride' ? '예) 셀레브, 아뜰리에 블랑 …' : '예) FANU, 소라 스튜디오 …';
   $('fitSec').style.display = v==='bride' ? '' : 'none';
+  $('pkgCntLabel').textContent = v==='bride' ? '촬영용 드레스 벌수' : '의상 교체 벌수 (신랑+신부)';
 }
 
 /* shop greeting */
@@ -173,7 +188,19 @@ $('shop').addEventListener('input',()=>{
   const hit=SHOPDB.find(s=>s.k.some(k=>v.toLowerCase().includes(k)));
   g.innerHTML = hit? hit.msg : GENERIC(v);
   g.style.display='block';
+  const pp=$('pkgPreset');
+  if(hit&&hit.pkg){
+    pkgChoice='';
+    pp.innerHTML='<div class="hint" style="margin:0 0 8px"><b>'+v+'</b>에서 많이 하시는 구성이에요 — 해당되는 걸 골라주세요.</div><div class="seg">'
+      + hit.pkg.map(x=>`<button type="button" onclick="pickPkg(this,'${x}')">${x}</button>`).join('')
+      + '<button type="button" onclick="pickPkg(this,\'직접 선택\')">다른 구성</button></div>';
+    pp.style.display='block';
+  } else { pp.style.display='none'; pkgChoice=''; }
 });
+function pickPkg(btn,v){
+  pkgChoice = v==='직접 선택' ? '' : v;
+  document.querySelectorAll('#pkgPreset .seg button').forEach(b=>b.classList.toggle('on',b===btn));
+}
 
 /* worldcup result carry-over (v2: 상세 프로필) */
 let prof=null;
@@ -208,6 +235,7 @@ $('submit').onclick=()=>{
    `취향 타입: ${type}`,
    ...detail,
    `레퍼런스: ${$('refs').value}`,
+   `촬영 구성: ${pkgChoice || [ $('pkg_cnt').value+ (edition==='bride'?' (촬영용 드레스)':' (의상 교체)'), '캐주얼 '+$('pkg_casual').value, '야외 '+$('pkg_out').value ].join(' / ')}`,
    edition==='bride'?`핏 정보: ${fit}`:null,
    `성함: ${name}`,
    `이메일: ${email}`,
