@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>신청하기 — 이지플랜북</title>
+<meta name="description" content="스튜디오·드레스샵 이름과 취향만 알려주세요. 24시간 안에 맞춤 가이드 PDF를 보내드립니다.">
+<link rel="icon" href="img/easylogger.png">
+<style>
+  :root{--bg:#FAF7F0;--ink:#2B2724;--sub:#6E655B;--tan:#8A6F55;--line:#E2D9CA;--yellow:#F6DE79}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Apple SD Gothic Neo","Pretendard",-apple-system,sans-serif;background:var(--bg);color:var(--ink);word-break:keep-all;overflow-wrap:break-word;line-height:1.6}
+  .wrap{max-width:560px;margin:0 auto;padding:0 18px}
+  header{padding:16px 0;border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:10}
+  .logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:15px}
+  .logo img{width:26px;height:26px;border-radius:50%}
+  .logo a{color:var(--ink);text-decoration:none}
+  .stage{padding:26px 0 70px}
+  h1{font-size:clamp(21px,5.8vw,27px);font-weight:900;line-height:1.35;margin-bottom:6px}
+  .lead{font-size:13.5px;color:var(--sub);margin-bottom:22px}
+  .sec{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;margin-bottom:14px}
+  .sec h3{font-size:14.5px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .sec h3 .no{flex:none;width:22px;height:22px;border-radius:50%;background:var(--yellow);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;border:1px solid rgba(0,0,0,.12)}
+  .sec .hint{font-size:12px;color:var(--sub);margin-bottom:12px}
+  label{display:block;font-size:12.5px;font-weight:800;margin:12px 0 6px}
+  label small{font-weight:600;color:var(--sub)}
+  input[type=text],input[type=email],input[type=date],select,textarea{width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;background:#FDFBF6;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--tan)}
+  .seg{display:flex;gap:8px;flex-wrap:wrap}
+  .seg button{flex:1;min-width:70px;padding:11px 8px;border:1.5px solid var(--line);border-radius:10px;background:#FDFBF6;font-size:13px;font-weight:700;font-family:inherit;color:var(--ink);cursor:pointer}
+  .seg button.on{background:var(--ink);color:#FAF7F0;border-color:var(--ink)}
+  .greet{display:none;margin-top:12px;background:#F3EDE2;border-radius:12px;padding:13px 15px;font-size:13px;line-height:1.7;color:#3E362E}
+  .greet b{color:var(--ink)}
+  .typechip{display:none;margin-top:4px;background:#F3EDE2;border-radius:12px;padding:12px 15px;font-size:13px}
+  .typechip b{box-shadow:inset 0 -0.35em 0 var(--yellow)}
+  .wclink{display:inline-block;margin-top:8px;font-size:12.5px;color:var(--tan);font-weight:800;text-decoration:underline}
+  .agree{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:#3E362E;margin-top:10px;line-height:1.55}
+  .agree input{margin-top:3px;accent-color:var(--ink);width:16px;height:16px}
+  .agree a{color:var(--tan)}
+  .cta{display:block;width:100%;background:var(--ink);color:#FAF7F0;font-size:16px;font-weight:800;padding:16px;border-radius:13px;border:none;font-family:inherit;cursor:pointer;margin-top:6px}
+  .cta:disabled{opacity:.4}
+  .note{font-size:11.5px;color:var(--sub);text-align:center;margin-top:10px}
+  /* done panel */
+  .done{display:none}
+  .done .panel{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:26px 20px;text-align:center}
+  .done h2{font-size:21px;font-weight:900;margin-bottom:8px}
+  .done p{font-size:13.5px;color:var(--sub);line-height:1.7;margin-bottom:14px}
+  .sum{background:#F3EDE2;border-radius:12px;padding:14px;text-align:left;font-size:12px;line-height:1.8;white-space:pre-wrap;margin-bottom:14px;color:#3E362E}
+  .cta.y{background:var(--yellow);color:var(--ink)}
+  .cta.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink);margin-top:10px}
+  footer{padding:24px 0 44px;text-align:center;font-size:10.5px;color:#9A8F80;line-height:1.7}
+  footer a{color:var(--tan)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="logo"><img src="img/easylogger.png" alt=""><a href="index.html">이지플랜북</a> <span style="font-weight:600;font-size:12px;color:var(--tan)">— 신청하기</span></div></div></header>
+
+<div class="wrap stage">
+  <div id="form">
+    <h1>3분이면 신청 끝,<br>24시간 안에 받아보세요</h1>
+    <p class="lead">작성하신 내용 그대로 분석이 시작됩니다. 결제는 신청 확인 후 안내드려요 (9,900원 · VAT 포함).</p>
+
+    <div class="sec">
+      <h3><span class="no">1</span>어떤 가이드가 필요하세요?</h3>
+      <div class="hint">준비 단계에 맞게 골라주세요.</div>
+      <div class="seg" id="edition">
+        <button type="button" data-v="bride" class="on">신부 에디션<br><small style="font-weight:600">드레스 셀렉 가이드</small></button>
+        <button type="button" data-v="couple">커플 에디션<br><small style="font-weight:600">촬영 플랜북</small></button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h3><span class="no">2</span><span id="shopLabel">드레스샵이 어디인가요?</span></h3>
+      <div class="hint">계약했거나 투어 예정인 곳 이름을 적어주세요. 공식 화보를 분석해 그 샵 기준으로 만들어 드려요.</div>
+      <input type="text" id="shop" placeholder="예) 셀레브, 아뜰리에 블랑 …" autocomplete="off">
+      <div class="greet" id="greet"></div>
+    </div>
+
+    <div class="sec">
+      <h3><span class="no">3</span>취향을 알려주세요</h3>
+      <div class="hint">1분 취향 월드컵을 하고 오시면 자동으로 채워져요.</div>
+      <div class="typechip" id="typechip"></div>
+      <div id="typeselwrap">
+        <label for="typesel">내 드레스 타입 <small>(모르면 "아직 모르겠어요")</small></label>
+        <select id="typesel">
+          <option value="">아직 모르겠어요 — 분석에 맡길게요</option>
+          <option>클래식 새틴형</option><option>모던 스컬프처형</option><option>로맨틱 꾸뛰르형</option><option>드라마틱 글램형</option>
+          <option>클래식 미니멀형</option><option>미니멀 에디토리얼형</option><option>빈티지 레이스형</option><option>시크 글램형</option>
+        </select>
+        <a class="wclink" href="worldcup.html">→ 1분 취향 월드컵 하러 가기</a>
+      </div>
+      <label for="refs">저장해둔 레퍼런스 <small>(선택)</small></label>
+      <select id="refs">
+        <option value="없음">아직 없어요</option>
+        <option value="있음 — 회신 메일에 첨부 예정">있어요 — 신청 후 회신 메일에 캡처를 첨부할게요</option>
+      </select>
+    </div>
+
+    <div class="sec" id="fitSec">
+      <h3><span class="no">4</span>핏 정보 <small style="font-weight:600;color:var(--sub)">(선택 — 알려주시면 더 정밀해져요)</small></h3>
+      <div class="hint">치수는 필요 없어요. 느낌으로 골라주시면 됩니다.</div>
+      <label>어깨 라인</label>
+      <select id="fit_shoulder"><option value="">선택 안 함</option><option>좁은 편</option><option>보통</option><option>넓은 편</option></select>
+      <label>상체 비율</label>
+      <select id="fit_torso"><option value="">선택 안 함</option><option>긴 편</option><option>보통</option><option>짧은 편</option></select>
+      <label>키</label>
+      <select id="fit_height"><option value="">선택 안 함</option><option>~155cm</option><option>156~165cm</option><option>166cm~</option></select>
+      <label>퍼스널컬러</label>
+      <select id="fit_tone"><option value="">모르겠어요</option><option>웜톤</option><option>쿨톤</option></select>
+    </div>
+
+    <div class="sec">
+      <h3><span class="no">5</span>전달받을 곳</h3>
+      <label>성함 또는 닉네임 <small>(필수)</small></label>
+      <input type="text" id="name" placeholder="예) 지운, 예신 O O">
+      <label>이메일 <small>(필수 — PDF 전달용)</small></label>
+      <input type="email" id="email" placeholder="you@example.com">
+      <label>촬영/피팅 예정일 <small>(선택 — 임박하면 우선 처리해 드려요)</small></label>
+      <input type="date" id="ddate">
+      <label>남기고 싶은 말 <small>(선택)</small></label>
+      <textarea id="memo" rows="2" placeholder="예) 다음 주 토요일이 드레스 투어예요!"></textarea>
+      <div class="agree"><input type="checkbox" id="ag1"><span><b>[필수]</b> <a href="privacy.html" target="_blank">개인정보 수집·이용</a>에 동의합니다. 업로드/첨부 이미지는 가이드 전달 후 즉시 파기됩니다.</span></div>
+      <div class="agree"><input type="checkbox" id="ag2"><span><b>[필수]</b> 맞춤 제작 콘텐츠 특성상 <a href="terms.html" target="_blank">제작(분석) 시작 후에는 환불이 어렵다</a>는 점에 동의합니다. 제작 시작 전에는 전액 환불됩니다.</span></div>
+    </div>
+
+    <button class="cta" id="submit">신청 보내기</button>
+    <div class="note">보내기를 누르면 메일 앱이 열려요 — 전송 버튼만 누르면 접수 완료! · 생성형 AI 분석 기반 서비스입니다</div>
+  </div>
+
+  <!-- done -->
+  <div class="done" id="done">
+    <div class="panel">
+      <h2>신청 내용이 준비됐어요 ✉️</h2>
+      <p>메일 앱이 열리지 않았다면 아래 내용을 복사해서<br><b>jicloud.studio@gmail.com</b> 으로 보내주세요.<br>확인 후 <b>24시간 안에</b> 결제 안내와 함께 회신드립니다.</p>
+      <div class="sum" id="sum"></div>
+      <button class="cta y" id="copy">신청 내용 복사하기</button>
+      <a class="cta ghost" id="remail" href="#">메일 앱 다시 열기</a>
+      <a class="cta ghost" href="sample.html">그동안 전달 예시 구경하기</a>
+    </div>
+  </div>
+</div>
+
+<footer class="wrap">
+  지클라우드스튜디오 · <a href="terms.html">이용약관</a> · <a href="privacy.html">개인정보처리방침</a> · <a href="index.html">이지플랜북 홈</a>
+</footer>
+
+<script>
+/* 샵 인사말 DB — 실제 분석 이력이 있는 샵만 구체 문구, 나머지는 범용 */
+const SHOPDB=[
+ {k:['셀레브','sesreves','ses reves'], msg:'<b>셀레브를 고르셨군요!</b> 셀레브는 드레이프 텍스처와 유니크한 꾸뛰르 디테일로 많은 신부님이 찾는 청담 디자이너샵이에요. 셀레브의 라인을 기준으로 취향을 분석해 드릴게요.'},
+];
+const GENERIC=(n)=>`<b>${n}</b>, 좋은 선택이에요! ${n}의 공식 화보를 분석해서 그 샵이 가장 자신 있는 라인 기준으로 가이드를 만들어 드릴게요.`;
+
+const $=id=>document.getElementById(id);
+let edition='bride';
+
+/* edition from query */
+const qs=new URLSearchParams(location.search);
+if(qs.get('edition')==='couple') setEdition('couple');
+document.querySelectorAll('#edition button').forEach(b=>b.onclick=()=>setEdition(b.dataset.v));
+function setEdition(v){
+  edition=v;
+  document.querySelectorAll('#edition button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  $('shopLabel').textContent = v==='bride' ? '드레스샵이 어디인가요?' : '촬영 스튜디오가 어디인가요?';
+  $('shop').placeholder = v==='bride' ? '예) 셀레브, 아뜰리에 블랑 …' : '예) FANU, 소라 스튜디오 …';
+  $('fitSec').style.display = v==='bride' ? '' : 'none';
+}
+
+/* shop greeting */
+$('shop').addEventListener('input',()=>{
+  const v=$('shop').value.trim(); const g=$('greet');
+  if(v.length<2){g.style.display='none';return;}
+  const hit=SHOPDB.find(s=>s.k.some(k=>v.toLowerCase().includes(k)));
+  g.innerHTML = hit? hit.msg : GENERIC(v);
+  g.style.display='block';
+});
+
+/* worldcup result carry-over */
+const t=localStorage.getItem('epb_type');
+if(t){
+  $('typechip').innerHTML=`취향 월드컵 결과 — <b>${t}</b> 으로 반영할게요! <a class="wclink" href="worldcup.html">다시 하기</a>`;
+  $('typechip').style.display='block';
+  $('typeselwrap').style.display='none';
+}
+
+/* submit */
+$('submit').onclick=()=>{
+  const name=$('name').value.trim(), email=$('email').value.trim(), shop=$('shop').value.trim();
+  if(!shop) return alert(edition==='bride'?'드레스샵 이름을 입력해주세요!':'스튜디오 이름을 입력해주세요!');
+  if(!name) return alert('성함(닉네임)을 입력해주세요!');
+  if(!email||!email.includes('@')) return alert('전달받을 이메일을 확인해주세요!');
+  if(!$('ag1').checked||!$('ag2').checked) return alert('필수 동의 항목 2가지를 체크해주세요!');
+  const type=t||$('typesel').value||'미정(분석 위임)';
+  const fit=[['어깨','fit_shoulder'],['상체','fit_torso'],['키','fit_height'],['톤','fit_tone']]
+    .map(([l,id])=>$(id)&&$(id).value?`${l} ${$(id).value}`:null).filter(Boolean).join(' · ')||'선택 안 함';
+  const lines=[
+   `[이지플랜북 신청]`,
+   `에디션: ${edition==='bride'?'신부 에디션 (드레스 셀렉 가이드)':'커플 에디션 (촬영 플랜북)'}`,
+   `${edition==='bride'?'드레스샵':'스튜디오'}: ${shop}`,
+   `취향 타입: ${type}`,
+   `레퍼런스: ${$('refs').value}`,
+   edition==='bride'?`핏 정보: ${fit}`:null,
+   `성함: ${name}`,
+   `이메일: ${email}`,
+   `예정일: ${$('ddate').value||'미정'}`,
+   `메모: ${$('memo').value.trim()||'-'}`,
+   `동의: 개인정보 O / 환불규정 O`,
+  ].filter(Boolean);
+  const body=lines.join('\n');
+  $('sum').textContent=body;
+  const mailto=`mailto:jicloud.studio@gmail.com?subject=${encodeURIComponent('[이지플랜북] '+(edition==='bride'?'신부':'커플')+' 에디션 신청 — '+name)}&body=${encodeURIComponent(body)}`;
+  $('remail').href=mailto;
+  $('form').style.display='none';
+  $('done').style.display='block';
+  window.scrollTo({top:0});
+  location.href=mailto;
+};
+$('copy').onclick=()=>{navigator.clipboard.writeText($('sum').textContent).then(()=>alert('복사됐어요! 메일이나 카카오톡으로 보내주세요 :)'));};
+</script>
+</body>
+</html>
