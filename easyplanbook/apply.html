@@ -106,6 +106,14 @@
       <select id="pkg_out"><option value="모름">아직 몰라요</option><option>포함</option><option>없음</option><option>고민 중</option></select>
     </div>
 
+    <div class="sec" id="coupleSec" style="display:none">
+      <h3><span class="no">5</span>드레스 & 플라워 <small style="font-weight:600;color:var(--sub)">(플랜북 룩 매칭·부케 플랜에 반영)</small></h3>
+      <label>신부님 드레스는 어느 단계인가요?</label>
+      <select id="cp_dress"><option value="미정">아직 미정이에요</option><option value="후보 단계">후보 몇 벌로 좁혀졌어요</option><option value="확정 — 사진 회신 예정">확정! (사진은 회신 메일로 보낼게요)</option></select>
+      <label>부케·플라워 무드는 어느 쪽이 끌리세요?</label>
+      <select id="cp_flower"><option value="맡길게요">잘 모르겠어요 — 스튜디오 무드에 맞게 제안해주세요</option><option value="톤온톤 클래식">톤온톤 클래식 (화이트·크림 계열)</option><option value="비비드 포인트">비비드 컬러 포인트 (화면에 색 하나 콱)</option><option value="드라이·내추럴">드라이플라워·내추럴 스템</option></select>
+    </div>
+
     <div class="sec" id="fitSec">
       <h3><span class="no">5</span>핏 정보 <small style="font-weight:600;color:var(--sub)">(선택 — 알려주시면 더 정밀해져요)</small></h3>
       <div class="hint">치수는 필요 없어요. 느낌으로 골라주시면 됩니다.</div>
@@ -188,6 +196,7 @@ function setEdition(v){
   $('shopLabel').textContent = v==='bride' ? '드레스샵이 어디인가요?' : '촬영 스튜디오가 어디인가요?';
   $('shop').placeholder = v==='bride' ? '예) 셀레브, 아뜰리에 블랑 …' : '예) FANU, 소라 스튜디오 …';
   $('fitSec').style.display = v==='bride' ? '' : 'none';
+  const cs=$('coupleSec'); if(cs) cs.style.display = v==='couple' ? '' : 'none';
   $('pkgCntLabel').textContent = v==='bride' ? '촬영용 드레스 벌수' : '의상 교체 벌수 (신랑+신부)';
   try{refreshTypeChip();}catch(e){}
 }
@@ -282,6 +291,8 @@ $('submit').onclick=async()=>{
    `레퍼런스: ${files.length? Math.min(files.length,20)+'장 첨부':'없음'}`,
    `촬영 구성: ${pkgChoice || [ $('pkg_cnt').value+ (edition==='bride'?' (촬영용 드레스)':' (의상 교체)'), '캐주얼 '+$('pkg_casual').value, '야외 '+$('pkg_out').value ].join(' / ')}`,
    edition==='bride'?`핏 정보: ${fit}`:null,
+   edition==='couple'?`드레스 상태: ${$('cp_dress').value}`:null,
+   edition==='couple'?`플라워 무드: ${$('cp_flower').value}`:null,
    `성함: ${name}`,
    `이메일: ${email}`,
    `예정일: ${$('ddate').value||'미정'}`,
@@ -295,8 +306,8 @@ $('submit').onclick=async()=>{
   // 직접 전송 시도 — 첨부 유무로 경로 분기 (AJAX는 첨부를 유실하므로)
   $('submit').disabled=true; $('submit').textContent='보내는 중…';
   const subj='[이지플랜북] '+(edition==='bride'?'신부':'커플')+' 에디션 신청 — '+name;
-  if(files.length>0){
-    // 압축 후 네이티브 폼 전송 → 완료되면 ?sent=1 로 복귀
+  {
+    // 항상 네이티브 폼 전송(자동 회신 지원) → 완료되면 ?sent=1 로 복귀
     try{
       const packed=await Promise.all([...files].slice(0,20).map(compressImage));
       const totalMB=packed.reduce((s,f)=>s+f.size,0)/1048576;
@@ -307,6 +318,7 @@ $('submit').onclick=async()=>{
       form.enctype='multipart/form-data'; form.style.display='none';
       const add=(n,v)=>{const inp=document.createElement('input'); inp.type='hidden'; inp.name=n; inp.value=v; form.appendChild(inp);};
       add('_subject',subj); add('_captcha','false'); add('_template','box');
+      add('_autoresponse','[이지플랜북] 신청이 접수됐어요! 내용 확인 후 24시간 안에 결제 안내와 함께 이 주소로 회신드립니다. 급하신 일정이 있다면 이 메일에 바로 답장 주세요 :) — 이지플랜북 드림');
       add('_next', location.origin+location.pathname+'?sent=1');
       add('신청내용',body); add('email',email);
       packed.forEach((f,i)=>{
