@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>드레스 취향 월드컵 — 이지플랜북</title>
-<meta name="description" content="1분 만에 끝나는 드레스 취향 테스트. 16개 스타일 중 당신의 선택이 말해주는 드레스 성향을 알려드려요.">
+<title>신랑 수트 취향 월드컵 — 이지플랜북</title>
+<meta name="description" content="1분 만에 끝나는 신랑 예복 취향 테스트. 16개 수트 스타일 중 당신의 선택이 말해주는 예복 성향을 알려드려요.">
 <link rel="icon" href="img/easylogger.png">
 <style>
   :root{--bg:#FAF7F0;--ink:#2B2724;--sub:#6E655B;--tan:#8A6F55;--line:#E2D9CA;--yellow:#F6DE79}
@@ -70,50 +70,49 @@
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="logo"><img src="img/easylogger.png" alt=""><div>드레스 취향 월드컵<small>EASYPLANBOOK · AI 스타일 카드</small></div></div></div></header>
+<header><div class="wrap"><div class="logo"><img src="img/easylogger.png" alt=""><div>신랑 수트 취향 월드컵<small>EASYPLANBOOK · AI 스타일 카드</small></div></div></div></header>
 
 <div class="wrap stage" id="app"></div>
 
 <footer class="wrap">
-  카드 이미지는 AI로 생성된 스타일 예시입니다 (실제 판매 드레스가 아닙니다) · <a href="index.html">이지플랜북 알아보기</a> · <a href="worldcup-suit.html">신랑 수트 월드컵 →</a><br>
+  카드 이미지는 AI로 생성된 스타일 예시입니다 (실제 판매 상품이 아닙니다) · <a href="index.html">이지플랜북 알아보기</a> · <a href="worldcup.html">드레스 월드컵 →</a><br>
   지클라우드스튜디오 · 결과는 참고용 취향 분석입니다
 </footer>
 
 <script>
 /* ---------- 16 style cards ---------- */
 const CARDS=[
- {img:'01', n:'클래식 새틴 볼가운', d:'광택 새틴 · 정석 실루엣', p:{sil:'ball',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
- {img:'02', n:'미카도 구조 볼가운', d:'매트 미카도 · 조형적 라인', p:{sil:'ball',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
- {img:'03', n:'로맨틱 레이스 볼가운', d:'샹티 레이스 · 부드러운 볼륨', p:{sil:'ball',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
- {img:'04', n:'글리터 비즈 볼가운', d:'비즈 반짝임 · 드라마틱', p:{sil:'ball',neck:'straight',det:'bead',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
- {img:'05', n:'태피터 A라인', d:'구김 광택 · 클래식 무드', p:{sil:'aline',neck:'straight',det:'none',sheen:'gloss'}, ax:{S:'V',D:'M',M:'K'}},
- {img:'06', n:'오프숄더 미니멀 A라인', d:'어깨 라인 · 담백한 원단', p:{sil:'aline',neck:'off',det:'none',sheen:'matte'}, ax:{S:'V',D:'M',M:'N'}},
- {img:'07', n:'플로럴 아플리케 A라인', d:'입체 플라워 · 러블리', p:{sil:'aline',neck:'sweet',det:'floral',sheen:'matte'}, ax:{S:'V',D:'C',M:'K'}},
- {img:'08', n:'시어 레이어 A라인', d:'오간자 겹 · 에디토리얼', p:{sil:'aline',neck:'straight',det:'lace',sheen:'gloss'}, ax:{S:'V',D:'C',M:'N'}},
- {img:'09', n:'브이넥 실크 슬립', d:'흐르는 실크 · 미니멀', p:{sil:'slip',neck:'cowl',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'N'}},
- {img:'10', n:'홀터넥 새틴 슬립', d:'목선 강조 · 클래식 미니멀', p:{sil:'slip',neck:'halter',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
- {img:'11', n:'비즈 슬립', d:'섬세한 반짝임 · 파티 무드', p:{sil:'slip',neck:'straight',det:'bead',sheen:'matte'}, ax:{S:'L',D:'C',M:'N'}},
- {img:'12', n:'빈티지 레이스 슬립', d:'전체 레이스 · 로맨틱', p:{sil:'slip',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
- {img:'13', n:'크레이프 머메이드', d:'매트 원단 · 순수 라인', p:{sil:'mermaid',neck:'straight',det:'none',sheen:'matte'}, ax:{S:'L',D:'M',M:'N'}},
- {img:'14', n:'스위트하트 머메이드', d:'클래식 글램 · 우아함', p:{sil:'mermaid',neck:'sweet',det:'none',sheen:'gloss'}, ax:{S:'L',D:'M',M:'K'}},
- {img:'15', n:'샹티레이스 머메이드', d:'레이스 바디라인 · 고전미', p:{sil:'mermaid',neck:'sweet',det:'lace',sheen:'matte'}, ax:{S:'L',D:'C',M:'K'}},
- {img:'16', n:'비즈 머메이드', d:'조각 같은 반짝임 · 시크', p:{sil:'mermaid',neck:'halter',det:'bead',sheen:'gloss'}, ax:{S:'L',D:'C',M:'N'}},
+ {img:'01', n:'블랙 피크드 턱시도', d:'새틴 라펠 · 보타이 · 정통 격식', p:{tone:'블랙',inner:'보타이',st:'턱시도'}, ax:{C:'D',F:'K',S:'T'}},
+ {img:'02', n:'블랙 벨벳 더블', d:'벨벳 광 · 올블랙 타이', p:{tone:'블랙',inner:'타이',st:'더블'}, ax:{C:'D',F:'K',S:'T'}},
+ {img:'03', n:'블랙 싱글 + 타이', d:'미니멀 블랙 · 흰 셔츠', p:{tone:'블랙',inner:'타이',st:'싱글'}, ax:{C:'D',F:'K',S:'M'}},
+ {img:'04', n:'네이비 싱글 + 버건디 타이', d:'클래식 배색 · 단정함', p:{tone:'네이비',inner:'타이',st:'싱글'}, ax:{C:'D',F:'K',S:'M'}},
+ {img:'05', n:'브라운 트위드 + 터틀넥', d:'텍스처 · 웜 무드', p:{tone:'브라운',inner:'터틀넥',st:'텍스처'}, ax:{C:'D',F:'R',S:'T'}},
+ {img:'06', n:'다크 글렌체크 더블 + 니트', d:'패턴 레이어드 · 노타이', p:{tone:'차콜',inner:'니트',st:'더블'}, ax:{C:'D',F:'R',S:'T'}},
+ {img:'07', n:'올블랙 터틀넥 수트', d:'시크 · 릴랙스 와이드', p:{tone:'블랙',inner:'터틀넥',st:'싱글'}, ax:{C:'D',F:'R',S:'M'}},
+ {img:'08', n:'차콜 수트 + 블랙 크루넥', d:'담백한 다크 톤온톤', p:{tone:'차콜',inner:'니트',st:'싱글'}, ax:{C:'D',F:'R',S:'M'}},
+ {img:'09', n:'올화이트 스리피스', d:'조끼 · 실버 타이 · 화사한 격식', p:{tone:'화이트',inner:'타이',st:'스리피스'}, ax:{C:'L',F:'K',S:'T'}},
+ {img:'10', n:'라이트그레이 글렌체크 스리피스', d:'댄디 · 조끼 포함', p:{tone:'그레이',inner:'타이',st:'스리피스'}, ax:{C:'L',F:'K',S:'T'}},
+ {img:'11', n:'크림 싱글 + 토널 타이', d:'부드러운 포멀', p:{tone:'크림',inner:'타이',st:'싱글'}, ax:{C:'L',F:'K',S:'M'}},
+ {img:'12', n:'화이트 재킷 + 블랙 팬츠', d:'상하 배색 · 블랙 타이', p:{tone:'화이트',inner:'타이',st:'싱글'}, ax:{C:'L',F:'K',S:'M'}},
+ {img:'13', n:'아이보리 더블 + 터틀넥', d:'톤온톤 레이어드', p:{tone:'크림',inner:'터틀넥',st:'더블'}, ax:{C:'L',F:'R',S:'T'}},
+ {img:'14', n:'베이지 린넨 텍스처 수트', d:'밴드칼라 · 내추럴 결', p:{tone:'베이지',inner:'밴드칼라',st:'텍스처'}, ax:{C:'L',F:'R',S:'T'}},
+ {img:'15', n:'그레이지 오버사이즈 + 흰 티', d:'릴랙스 핏 · 화보 무드', p:{tone:'그레이지',inner:'티셔츠',st:'싱글'}, ax:{C:'L',F:'R',S:'M'}},
+ {img:'16', n:'라이트 베이지 + 오픈칼라', d:'노타이 · 자연광 무드', p:{tone:'베이지',inner:'오픈칼라',st:'싱글'}, ax:{C:'L',F:'R',S:'M'}},
 ];
 const TYPES={
- 'V-M-K':{name:'클래식 새틴형', desc:'장식보다 정제된 실루엣과 원단의 광으로 완성되는 정석 웨딩 무드. 새틴·태피터 볼륨 라인에서 가장 빛나요.', reco:['새틴·미카도 볼가운, 태피터 A라인 우선 피팅','디테일은 벨트·리본 딱 하나만','베일은 미니멀 롱 베일로 격 완성']},
- 'V-M-N':{name:'모던 스컬프처형', desc:'매트 미카도의 조형적인 볼륨 — 건축적인 라인을 좋아하는 타입. 구조가 살아있는 드레스가 답이에요.', reco:['미카도·자카드의 구조적 볼가운 우선','넥라인은 스트레이트로 모던하게','액세서리 최소화, 헤어는 슬릭']},
- 'V-C-K':{name:'로맨틱 꾸뛰르형', desc:'레이스·플로럴의 수공예 디테일과 부드러운 볼륨. 가까이서 볼수록 예쁜 드레스를 사랑하는 타입.', reco:['샹티레이스·플로럴 아플리케 볼가운/A라인','클로즈업 촬영 컷 비중 높이기','부케는 내추럴 스템으로 톤 맞춤']},
- 'V-C-N':{name:'드라마틱 글램형', desc:'비즈의 반짝임과 큰 실루엣 — 화면을 압도하는 무드. 조명 아래에서 가장 강한 타입이에요.', reco:['비즈·글리터 볼가운 우선 피팅','촬영은 조명 강한 홀·무배경 존에서','주얼리는 과감하게 한 세트']},
- 'L-M-K':{name:'클래식 미니멀형', desc:'홀터넥 새틴 슬립처럼 목선과 원단으로 승부하는 우아함. 유행을 타지 않는 라인을 찾는 타입.', reco:['새틴 슬립·시스, 홀터/스퀘어넥 우선','헤어 업스타일로 목선 살리기','진주 한 점으로 마무리']},
- 'L-M-N':{name:'미니멀 에디토리얼형', desc:'슬립과 크레이프 머메이드 — 장식 없이 라인과 무드로 완성되는 화보 취향이에요.', reco:['슬립·크레이프 머메이드 우선','케이프 베일·시어 레이어로 촬영 변주','흑백 컷 지정 추천']},
- 'L-C-K':{name:'빈티지 레이스형', desc:'몸을 따라 흐르는 레이스의 고전미. 세월이 지나도 촌스럽지 않은 로맨틱을 아는 타입.', reco:['레이스 슬립·샹티 머메이드 우선','소매·베일도 레이스로 톤온톤','자연광 촬영 비중 높이기']},
- 'L-C-N':{name:'시크 글램형', desc:'슬림 라인 위의 비즈 — 절제와 화려함의 균형. 파티처럼 빛나되 과하지 않게.', reco:['비즈 슬립·머메이드 우선 피팅','헤어 슬릭, 이어링 포인트','2부 드레스 겸용 셀렉도 고려']},
+ 'D-K-T':{name:'클래식 포멀형', desc:'턱시도·더블의 정통 격식 — 계단 홀, 무배경 같은 그래픽한 공간에서 가장 강한 타입이에요.', reco:['벨벳·새틴 트리밍 더블 또는 턱시도 우선','흰 셔츠+블랙 타이 ↔ 올블랙 이너로 두 무드','헤어는 슬릭 백, 광 없는 매트 왁스']},
+ 'D-K-M':{name:'모던 블랙형', desc:'군더더기 없는 싱글 수트에 타이 하나 — 어떤 드레스 옆에서도 안정적인 미니멀 포멀 타입.', reco:['블랙·네이비 싱글, 라펠은 노치로 담백하게','타이 폭 7~8cm 무광','구두·벨트 블랙으로 통일']},
+ 'D-R-T':{name:'무드 레이어드형', desc:'트위드·글렌체크의 텍스처에 니트를 받친 레이어드 — 원단의 결로 분위기를 만드는 타입.', reco:['텍스처 재킷+터틀넥/니트 조합 우선','패턴은 한 아이템만 — 나머지는 솔리드','브라운 로퍼로 웜톤 마무리']},
+ 'D-R-M':{name:'시크 터틀넥형', desc:'올블랙 터틀넥의 절제된 시크 — 흑백 컷과 미러 존에서 빛나는 화보 취향이에요.', reco:['블랙 터틀넥+와이드 슬랙스 기본','재킷 걸치면 세미 수트로 전환','비비드 부케를 유일한 컬러 포인트로']},
+ 'L-K-T':{name:'라이트 댄디형', desc:'화이트·라이트그레이 스리피스의 화사한 격식 — 조끼까지 갖춘 클래식 댄디 타입.', reco:['올화이트/글렌체크 스리피스 우선 피팅','실버·도트 타이로 포인트','밝은 세트·자연광 존에서 촬영 비중 높이기']},
+ 'L-K-M':{name:'소프트 클래식형', desc:'크림·화이트 싱글의 부드러운 포멀 — 힘 있는 격식보다 온화한 단정함을 찾는 타입.', reco:['크림 싱글+토널 타이 우선','화이트 재킷+블랙 팬츠 배색도 시도','드레스와 톤온톤으로 묶기']},
+ 'L-R-T':{name:'아이보리 텍스처형', desc:'린넨·더블의 결이 살아있는 라이트 톤 레이어드 — 내추럴하지만 밋밋하지 않은 타입.', reco:['아이보리 더블+터틀넥, 린넨 텍스처 수트','밴드칼라 셔츠로 목선 정리','자연광·커튼 존과 최고 궁합']},
+ 'L-R-M':{name:'내추럴 그레이지형', desc:'오버사이즈 그레이지에 흰 티 — 힘을 완전히 뺀 요즘 화보의 정석 타입이에요.', reco:['그레이지 오버사이즈+흰 티/오픈칼라','슬림 핏 금지 — 와이드 슬랙스 필수','헤어 내추럴 다운, 소파·커튼 존 컷 비중↑']},
 };
 const LB={
- sil:{ball:'볼가운',aline:'A라인',slip:'슬립',mermaid:'머메이드'},
- det:{none:'미니멀(무장식)',bead:'비즈',lace:'레이스',floral:'플로럴'},
- sheen:{gloss:'광택 원단',matte:'매트 원단'},
- neck:{straight:'스트레이트넥',sweet:'스위트하트',cowl:'카울·브이넥',halter:'홀터넥',off:'오프숄더'},
+ tone:{'블랙':'블랙','네이비':'네이비','차콜':'차콜','브라운':'브라운','화이트':'화이트','그레이':'라이트그레이','크림':'크림','그레이지':'그레이지','베이지':'베이지'},
+ inner:{'타이':'타이','보타이':'보타이','티셔츠':'티셔츠','니트':'니트','터틀넥':'터틀넥','오픈칼라':'오픈칼라','밴드칼라':'밴드칼라'},
+ st:{'싱글':'싱글','더블':'더블','스리피스':'스리피스','턱시도':'턱시도','텍스처':'텍스처'},
 };
 
 /* ---------- state ---------- */
@@ -121,22 +120,22 @@ const app=document.getElementById('app');
 let deck=[],next=[],round=16,matches=0,tShow=0,userName='';
 let axis,attr,cardPts;
 function reset(){
-  axis={S:{V:0,L:0},D:{M:0,C:0},M:{K:0,N:0}};
-  attr={sil:{},det:{},sheen:{},neck:{}};
+  axis={C:{D:0,L:0},F:{K:0,R:0},S:{M:0,T:0}};
+  attr={tone:{},inner:{},st:{}};
   cardPts={};
   deck=shuffle([...CARDS]); next=[]; round=16; matches=0;
 }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function bump(c,w){
-  axis.S[c.ax.S]+=w; axis.D[c.ax.D]+=w; axis.M[c.ax.M]+=w;
-  for(const k of ['sil','det','sheen','neck']){ const v=c.p[k]; attr[k][v]=(attr[k][v]||0)+w; }
+  axis.C[c.ax.C]+=w; axis.F[c.ax.F]+=w; axis.S[c.ax.S]+=w;
+  for(const k of ['tone','inner','st']){ const v=c.p[k]; attr[k][v]=(attr[k][v]||0)+w; }
   cardPts[c.img]=(cardPts[c.img]||0)+w;
 }
 function roundW(){return round===16?1:round===8?2:round===4?3:5;}
 
 /* ---------- flow ---------- */
 function start(){
-  CARDS.forEach(c=>{const im=new Image(); im.src='img/cards/'+c.img+'.jpg';});
+  CARDS.forEach(c=>{const im=new Image(); im.src='img/cards-suit/'+c.img+'.jpg';});
   userName=(document.getElementById('uname')||{value:''}).value.trim().slice(0,10);
   reset(); render();
 }
@@ -157,12 +156,12 @@ function render(){
   const [a,b]=deck; const done=matches, tot=15;
   app.innerHTML=`
    <span class="round">${round===16?'16강':round===8?'8강':round===4?'준결승':'결승'}</span>
-   <h1>더 끌리는 드레스는?</h1>
+   <h1>더 끌리는 수트는?</h1>
    <p class="q">직감으로 골라주세요 — ${done+1} / ${tot}</p>
    <div class="vs">
      <span class="badge-vs">VS</span>
-     <div class="card" onclick="pick(0)"><div class="cimg" style="background-image:url('img/cards/${a.img}.jpg')"></div><b>${a.n}</b><span>${a.d}</span></div>
-     <div class="card" onclick="pick(1)"><div class="cimg" style="background-image:url('img/cards/${b.img}.jpg')"></div><b>${b.n}</b><span>${b.d}</span></div>
+     <div class="card" onclick="pick(0)"><div class="cimg" style="background-image:url('img/cards-suit/${a.img}.jpg')"></div><b>${a.n}</b><span>${a.d}</span></div>
+     <div class="card" onclick="pick(1)"><div class="cimg" style="background-image:url('img/cards-suit/${b.img}.jpg')"></div><b>${b.n}</b><span>${b.d}</span></div>
    </div>
    <div class="prog"><i style="width:${done/tot*100}%"></i></div>`;
   window.scrollTo({top:0});
@@ -173,47 +172,47 @@ function render(){
 function share(dim,key){ const s=Object.values(attr[dim]).reduce((x,y)=>x+y,0); return s? Math.round((attr[dim][key]||0)/s*100):0; }
 function topKey(dim){ return Object.entries(attr[dim]).sort((a,b)=>b[1]-a[1])[0]?.[0]; }
 function cardScore(c){
-  return share('sil',c.p.sil)*1.0 + share('det',c.p.det)*0.9 + share('sheen',c.p.sheen)*0.6 + share('neck',c.p.neck)*0.5 + (cardPts[c.img]||0)*3;
+  return share('tone',c.p.tone)*1.0 + share('inner',c.p.inner)*0.9 + share('st',c.p.st)*0.7 + (cardPts[c.img]||0)*3;
 }
 function reasons(c){
   const r=[];
-  r.push({t:`${LB.sil[c.p.sil]} 실루엣 — 선택 비중 ${share('sil',c.p.sil)}%`, v:share('sil',c.p.sil)});
-  r.push({t:`${LB.det[c.p.det]} 디테일 ${share('det',c.p.det)}%`, v:share('det',c.p.det)});
-  r.push({t:`${LB.sheen[c.p.sheen]} 선호 ${share('sheen',c.p.sheen)}%`, v:share('sheen',c.p.sheen)});
+  r.push({t:`${LB.tone[c.p.tone]} 톤 — 선택 비중 ${share('tone',c.p.tone)}%`, v:share('tone',c.p.tone)});
+  r.push({t:`이너 ${LB.inner[c.p.inner]} ${share('inner',c.p.inner)}%`, v:share('inner',c.p.inner)});
+  r.push({t:`${LB.st[c.p.st]} 구조 ${share('st',c.p.st)}%`, v:share('st',c.p.st)});
   if((cardPts[c.img]||0)>0) r.push({t:'토너먼트에서 직접 선택', v:101});
   return r.sort((a,b)=>b.v-a.v).slice(0,3).map(x=>`<span>${x.t}</span>`).join('');
 }
 let profile=null;
 function pct(x,y){return Math.round(x/(x+y)*100)||50;}
 function result(winner){
-  const key=(axis.S.V>=axis.S.L?'V':'L')+'-'+(axis.D.M>=axis.D.C?'M':'C')+'-'+(axis.M.K>=axis.M.N?'K':'N');
+  const key=(axis.C.D>=axis.C.L?'D':'L')+'-'+(axis.F.K>=axis.F.R?'K':'R')+'-'+(axis.S.T>=axis.S.M?'T':'M');
   const t=TYPES[key];
-  const sp=pct(axis.S.V,axis.S.L), dp=pct(axis.D.M,axis.D.C), mp=pct(axis.M.K,axis.M.N);
+  const sp=pct(axis.C.D,axis.C.L), dp=pct(axis.F.K,axis.F.R), mp=pct(axis.S.T,axis.S.M);
   // TOP3: 점수순 + 우승 카드 보장
   let ranked=[...CARDS].sort((a,b)=>cardScore(b)-cardScore(a));
   let top3=ranked.slice(0,3);
   if(!top3.some(c=>c.img===winner.img)){ top3=[winner,...top3.slice(0,2)]; }
-  const who=userName?userName+' 님':'예비 신부님';
+  const who=userName?userName+' 님':'예비 신랑님';
   profile={name:userName, type:t.name, tone:null,
     top:top3.map(c=>({name:c.n,img:c.img})),
-    prefs:{실루엣:`${LB.sil[topKey('sil')]} ${share('sil',topKey('sil'))}%`, 디테일:`${LB.det[topKey('det')]} ${share('det',topKey('det'))}%`, 원단:`${LB.sheen[topKey('sheen')]} ${share('sheen',topKey('sheen'))}%`, 넥라인:`${LB.neck[topKey('neck')]} ${share('neck',topKey('neck'))}%`}};
-  try{localStorage.setItem('epb_type',t.name); localStorage.setItem('epb_profile',JSON.stringify(profile));}catch(e){}
+    prefs:{톤:`${LB.tone[topKey('tone')]} ${share('tone',topKey('tone'))}%`, 이너:`${LB.inner[topKey('inner')]} ${share('inner',topKey('inner'))}%`, 구조:`${LB.st[topKey('st')]} ${share('st',topKey('st'))}%`}};
+  try{localStorage.setItem('epb_groom_type',t.name); localStorage.setItem('epb_groom_profile',JSON.stringify(profile));}catch(e){}
   app.innerHTML=`
    <div class="panel">
-    <div class="type-tag">MY DRESS TYPE</div>
+    <div class="type-tag">MY SUIT TYPE</div>
     <div class="type-name"><em>${t.name}</em></div>
     <p class="type-desc">${t.desc}</p>
     <p class="timenote">선택 속도(고민한 시간)까지 가중치로 반영한 결과예요</p>
     <div class="axes">
-      <div class="ax"><div class="lb"><span>볼륨 실루엣</span><span>슬림 실루엣</span></div><div class="bar"><i style="width:${sp}%"></i></div></div>
-      <div class="ax"><div class="lb"><span>미니멀</span><span>꾸뛰르 디테일</span></div><div class="bar"><i style="width:${dp}%"></i></div></div>
-      <div class="ax"><div class="lb"><span>클래식</span><span>모던</span></div><div class="bar"><i style="width:${mp}%"></i></div></div>
+      <div class="ax"><div class="lb"><span>딥 톤</span><span>라이트 톤</span></div><div class="bar"><i style="width:${sp}%"></i></div></div>
+      <div class="ax"><div class="lb"><span>포멀</span><span>릴랙스</span></div><div class="bar"><i style="width:${dp}%"></i></div></div>
+      <div class="ax"><div class="lb"><span>스트럭처드</span><span>미니멀</span></div><div class="bar"><i style="width:${mp}%"></i></div></div>
     </div>
     <div class="top3">
       <h3>${who}이 좋아할 만한 드레스는 이 세 벌이에요 💛</h3>
       ${top3.map((c,i)=>`
       <div class="titem">
-        <div class="timg" style="background-image:url('img/cards/${c.img}.jpg')"></div>
+        <div class="timg" style="background-image:url('img/cards-suit/${c.img}.jpg')"></div>
         <div class="tinfo">
           <span class="trank">${i===0?'BEST MATCH':i===1?'SECOND':'THIRD'}</span>
           <b>${c.n}</b>
@@ -222,13 +221,13 @@ function result(winner){
       </div>`).join('')}
     </div>
     <div class="tonebox" id="tonebox">
-      <h4>보너스 한 문항 — 끌리는 톤은? (가이드에 반영돼요)</h4>
+      <h4>보너스 한 문항 — 구두는 어느 쪽? (가이드에 반영돼요)</h4>
       <div class="seg">
-        ${['아이보리','퓨어 화이트','샴페인·블러시','모르겠어요'].map(x=>`<button type="button" onclick="setTone(this,'${x}')">${x}</button>`).join('')}
+        ${['블랙 로퍼','브라운 로퍼','더비·레이스업','모르겠어요'].map(x=>`<button type="button" onclick="setTone(this,'${x}')">${x}</button>`).join('')}
       </div>
     </div>
     <div class="reco"><h4>이 타입의 셀렉 방향</h4><ul>${t.reco.map(r=>`<li>${r}</li>`).join('')}</ul></div>
-    <a class="cta y" href="apply.html?edition=bride">내 드레스샵 기준 상세 가이드 받기 — 9,900원</a>
+    <a class="cta y" href="apply.html?edition=couple">우리 스튜디오 기준 촬영 플랜북 받기 — 9,900원</a>
     <button class="sub-act" onclick="shareResult('${t.name}')">결과 복사하기</button>
     <button class="sub-act" onclick="intro()">다시 하기</button>
    </div>`;
@@ -237,18 +236,18 @@ function result(winner){
 function setTone(btn,v){
   document.querySelectorAll('#tonebox button').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  if(profile){profile.tone=v; try{localStorage.setItem('epb_profile',JSON.stringify(profile));}catch(e){}}
+  if(profile){profile.tone=v; try{localStorage.setItem('epb_groom_profile',JSON.stringify(profile));}catch(e){}}
 }
 function shareResult(name){
-  const txt=`나의 드레스 취향은 "${name}" 💛 — 1분 테스트 해보기: `+location.origin+location.pathname;
-  navigator.clipboard.writeText(txt).then(()=>alert('결과가 복사됐어요! 예비 신부 친구에게 공유해보세요 :)'));
+  const txt=`나의 수트 취향은 "${name}" 💛 — 1분 테스트 해보기: `+location.origin+location.pathname;
+  navigator.clipboard.writeText(txt).then(()=>alert('결과가 복사됐어요! 예비 신랑·신부에게 공유해보세요 :)'));
 }
 function intro(){
   app.innerHTML=`
    <div class="panel">
     <div class="type-tag">EASYPLANBOOK</div>
-    <div class="type-name">드레스 취향<br><em>월드컵</em></div>
-    <p class="type-desc">16개 스타일, 15번의 선택.<br>고민한 시간까지 반영해 당신의 드레스 성향과<br><b>좋아할 만한 드레스 TOP 3</b>를 찾아드려요.</p>
+    <div class="type-name">신랑 수트<br><em>월드컵</em></div>
+    <p class="type-desc">16개 수트, 15번의 선택.<br>고민한 시간까지 반영해 예복 성향과<br><b>어울리는 수트 TOP 3</b>를 찾아드려요.</p>
     <input class="nameinp" id="uname" type="text" maxlength="10" placeholder="이름·닉네임 (선택)">
     <a class="cta" href="javascript:start()">시작하기</a>
    </div>`;

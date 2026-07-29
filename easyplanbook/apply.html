@@ -87,7 +87,7 @@
           <option>클래식 새틴형</option><option>모던 스컬프처형</option><option>로맨틱 꾸뛰르형</option><option>드라마틱 글램형</option>
           <option>클래식 미니멀형</option><option>미니멀 에디토리얼형</option><option>빈티지 레이스형</option><option>시크 글램형</option>
         </select>
-        <a class="wclink" href="worldcup.html">→ 1분 취향 월드컵 하러 가기</a>
+        <a class="wclink" href="worldcup.html">→ 드레스 취향 월드컵 (신부)</a> <a class="wclink" href="worldcup-suit.html">→ 수트 취향 월드컵 (신랑)</a>
       </div>
       <label for="reffiles">저장해둔 레퍼런스 캡처 <small>(선택 — 많을수록 정확해져요)</small></label>
       <input type="file" id="reffiles" accept="image/*" multiple style="width:100%;padding:11px;border:1.5px dashed var(--line);border-radius:10px;background:#FDFBF6;font-size:13px;font-family:inherit">
@@ -189,6 +189,7 @@ function setEdition(v){
   $('shop').placeholder = v==='bride' ? '예) 셀레브, 아뜰리에 블랑 …' : '예) FANU, 소라 스튜디오 …';
   $('fitSec').style.display = v==='bride' ? '' : 'none';
   $('pkgCntLabel').textContent = v==='bride' ? '촬영용 드레스 벌수' : '의상 교체 벌수 (신랑+신부)';
+  try{refreshTypeChip();}catch(e){}
 }
 
 /* shop greeting — 입력이 끝났을 때만 표시 (디바운스+블러) */
@@ -215,16 +216,22 @@ function pickPkg(btn,v){
   document.querySelectorAll('#pkgPreset .seg button').forEach(b=>b.classList.toggle('on',b===btn));
 }
 
-/* worldcup result carry-over (v2: 상세 프로필) */
-let prof=null;
-try{prof=JSON.parse(localStorage.getItem('epb_profile'));}catch(e){}
-const t=prof?prof.type:localStorage.getItem('epb_type');
-if(t){
-  const extra=[prof&&prof.tone?`선호 톤 ${prof.tone}`:null, prof&&prof.top?`추천 ${prof.top.map(x=>x.name).join(' · ')}`:null].filter(Boolean).join('<br>');
+/* worldcup result carry-over (v2: 상세 프로필 — 에디션별) */
+let profBride=null, profGroom=null;
+try{profBride=JSON.parse(localStorage.getItem('epb_profile'));}catch(e){}
+try{profGroom=JSON.parse(localStorage.getItem('epb_groom_profile'));}catch(e){}
+let prof=null, t=null;
+function refreshTypeChip(){
+  prof = edition==='couple' ? (profGroom||profBride) : (profBride||null);
+  t = prof?prof.type:(edition==='bride'?localStorage.getItem('epb_type'):localStorage.getItem('epb_groom_type'));
+  if(t){
+  const extra=[prof&&prof.tone?`선호 ${prof.tone}`:null, prof&&prof.top?`추천 ${prof.top.map(x=>x.name).join(' · ')}`:null].filter(Boolean).join('<br>');
   $('typechip').innerHTML=`취향 월드컵 결과 — <b>${t}</b> 으로 반영할게요!${extra?'<br><span style="font-size:11.5px;color:var(--sub)">'+extra+'</span>':''} <a class="wclink" href="worldcup.html">다시 하기</a>`;
   $('typechip').style.display='block';
   $('typeselwrap').style.display='none';
+  }else{ $('typechip').style.display='none'; $('typeselwrap').style.display=''; }
 }
+refreshTypeChip();
 
 /* 레퍼런스 이미지 클라이언트 압축 — 분석엔 1600px이면 충분 */
 async function compressImage(file){
@@ -257,11 +264,14 @@ $('submit').onclick=async()=>{
   const type=t||$('typesel').value||'미정(분석 위임)';
   const fit=[['어깨','fit_shoulder'],['상체','fit_torso'],['키','fit_height'],['톤','fit_tone']]
     .map(([l,id])=>$(id)&&$(id).value?`${l} ${$(id).value}`:null).filter(Boolean).join(' · ')||'선택 안 함';
-  const detail=prof?[
-    prof.tone?`선호 톤: ${prof.tone}`:null,
-    prof.top?`월드컵 추천 TOP3: ${prof.top.map(x=>x.name).join(', ')}`:null,
-    prof.prefs?`속성 선호: ${Object.entries(prof.prefs).map(([k,v])=>k+' '+v).join(' / ')}`:null,
+  const profLine=(p,who)=>p?[
+    `${who} 타입: ${p.type}${p.tone?' · '+p.tone:''}`,
+    p.top?`${who} 추천 TOP3: ${p.top.map(x=>x.name).join(', ')}`:null,
+    p.prefs?`${who} 속성 선호: ${Object.entries(p.prefs).map(([k,v])=>k+' '+v).join(' / ')}`:null,
   ].filter(Boolean):[];
+  const detail = edition==='couple'
+    ? [...profLine(profGroom,'신랑'), ...profLine(profBride,'신부')]
+    : profLine(profBride,'신부');
   const lines=[
    `[이지플랜북 신청]`,
    `에디션: ${edition==='bride'?'신부 에디션 (드레스 셀렉 가이드)':'커플 에디션 (촬영 플랜북)'}`,
