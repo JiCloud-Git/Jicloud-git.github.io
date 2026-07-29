@@ -268,6 +268,7 @@ $('submit').onclick=async()=>{
     `${who} 타입: ${p.type}${p.tone?' · '+p.tone:''}`,
     p.top?`${who} 추천 TOP3: ${p.top.map(x=>x.name).join(', ')}`:null,
     p.prefs?`${who} 속성 선호: ${Object.entries(p.prefs).map(([k,v])=>k+' '+v).join(' / ')}`:null,
+    p.combo?`${who} 촬영 조합 추천: ${p.combo.map(x=>x.role.split(' ')[0]+'='+x.name).join(' / ')}`:null,
   ].filter(Boolean):[];
   const detail = edition==='couple'
     ? [...profLine(profGroom,'신랑'), ...profLine(profBride,'신부')]

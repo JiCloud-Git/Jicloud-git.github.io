@@ -57,6 +57,10 @@
   .titem b{font-size:14.5px;display:block;margin:1px 0 5px}
   .why{display:flex;flex-wrap:wrap;gap:4px}
   .why span{font-size:10.5px;background:#F3EDE2;border-radius:99px;padding:3px 9px;color:#55493E;font-weight:700}
+  .tabbar{display:flex;gap:8px;margin:0 0 14px}
+  .tabbar button{flex:1;padding:11px;border:1.5px solid var(--line);border-radius:99px;background:#fff;font-size:13px;font-weight:800;font-family:inherit;color:var(--ink);cursor:pointer}
+  .tabbar button.on{background:var(--ink);color:#FAF7F0;border-color:var(--ink)}
+  .combonote{font-size:11.5px;color:var(--sub);line-height:1.6;margin:0 0 12px;text-align:left}
   .tonebox{background:#F3EDE2;border-radius:12px;padding:14px;margin-bottom:20px}
   .tonebox h4{font-size:12px;font-weight:900;margin-bottom:8px}
   .tonebox .seg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
@@ -183,6 +187,8 @@ function reasons(c){
   if((cardPts[c.img]||0)>0) r.push({t:'토너먼트에서 직접 선택', v:101});
   return r.sort((a,b)=>b.v-a.v).slice(0,3).map(x=>`<span>${x.t}</span>`).join('');
 }
+function titem(c,label,why){return `<div class="titem"><div class="timg" style="background-image:url('img/cards/${c.img}.jpg')"></div><div class="tinfo"><span class="trank">${label}</span><b>${c.n}</b><div class="why">${why}</div></div></div>`;}
+function swTab(btn,m){document.querySelectorAll('.tabbar button').forEach(b=>b.classList.toggle('on',b===btn));document.getElementById('tab-top').style.display=m==='top'?'':'none';document.getElementById('tab-combo').style.display=m==='combo'?'':'none';}
 let profile=null;
 function pct(x,y){return Math.round(x/(x+y)*100)||50;}
 function result(winner){
@@ -193,9 +199,15 @@ function result(winner){
   let ranked=[...CARDS].sort((a,b)=>cardScore(b)-cardScore(a));
   let top3=ranked.slice(0,3);
   if(!top3.some(c=>c.img===winner.img)){ top3=[winner,...top3.slice(0,2)]; }
+  const ranked2=ranked.slice();
+  const c1=ranked2.find(c=>['ball','aline'].includes(c.p.sil))||ranked2[0];
+  const c2=ranked2.find(c=>c.img!==c1.img)||ranked2[0];
+  const c3=ranked2.find(c=>c.img!==c1.img&&c.img!==c2.img&&c.p.sil!==c2.p.sil)||ranked2.find(c=>c.img!==c1.img&&c.img!==c2.img);
+  const combo=[{c:c1,role:'클래식 · 메인 볼륨 컷'},{c:c2,role:'시그니처 · 취향 1순위'},{c:c3,role:'변주 · 다른 실루엣'}];
   const who=userName?userName+' 님':'예비 신부님';
   profile={name:userName, type:t.name, tone:null,
     top:top3.map(c=>({name:c.n,img:c.img})),
+    combo:combo.map(x=>({name:x.c.n,img:x.c.img,role:x.role})),
     prefs:{실루엣:`${LB.sil[topKey('sil')]} ${share('sil',topKey('sil'))}%`, 디테일:`${LB.det[topKey('det')]} ${share('det',topKey('det'))}%`, 원단:`${LB.sheen[topKey('sheen')]} ${share('sheen',topKey('sheen'))}%`, 넥라인:`${LB.neck[topKey('neck')]} ${share('neck',topKey('neck'))}%`}};
   try{localStorage.setItem('epb_type',t.name); localStorage.setItem('epb_profile',JSON.stringify(profile));}catch(e){}
   app.innerHTML=`
@@ -210,16 +222,19 @@ function result(winner){
       <div class="ax"><div class="lb"><span>클래식</span><span>모던</span></div><div class="bar"><i style="width:${mp}%"></i></div></div>
     </div>
     <div class="top3">
-      <h3>${who}이 좋아할 만한 드레스는 이 세 벌이에요 💛</h3>
-      ${top3.map((c,i)=>`
-      <div class="titem">
-        <div class="timg" style="background-image:url('img/cards/${c.img}.jpg')"></div>
-        <div class="tinfo">
-          <span class="trank">${i===0?'BEST MATCH':i===1?'SECOND':'THIRD'}</span>
-          <b>${c.n}</b>
-          <div class="why">${reasons(c)}</div>
-        </div>
-      </div>`).join('')}
+      <div class="tabbar">
+        <button type="button" class="on" onclick="swTab(this,'top')">내 취향 TOP 3</button>
+        <button type="button" onclick="swTab(this,'combo')">촬영 조합 추천</button>
+      </div>
+      <div id="tab-top">
+        <h3>${who}이 좋아할 만한 드레스는 이 세 벌이에요 💛</h3>
+        ${top3.map((c,i)=>titem(c,i===0?'BEST MATCH':i===1?'SECOND':'THIRD',reasons(c))).join('')}
+      </div>
+      <div id="tab-combo" style="display:none">
+        <h3>실제 촬영은 조합이에요 — 이렇게 배분해 보세요 📸</h3>
+        <div class="combonote">촬영은 보통 2~3벌 — 취향 컷에 클래식 볼륨과 변주 실루엣을 섞으면 앨범이 훨씬 풍성해져요. 유료 가이드에선 우리 샵 화보와 의상 벌수까지 반영해 정밀 배분해 드립니다.</div>
+        ${combo.map(x=>titem(x.c,x.role,reasons(x.c))).join('')}
+      </div>
     </div>
     <div class="tonebox" id="tonebox">
       <h4>보너스 한 문항 — 끌리는 톤은? (가이드에 반영돼요)</h4>
