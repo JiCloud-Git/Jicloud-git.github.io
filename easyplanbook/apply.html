@@ -89,9 +89,9 @@
         </select>
         <a class="wclink" href="worldcup.html">→ 1분 취향 월드컵 하러 가기</a>
       </div>
-      <label for="reffiles">저장해둔 레퍼런스 캡처 <small>(선택 — 여기서 바로 첨부돼요)</small></label>
+      <label for="reffiles">저장해둔 레퍼런스 캡처 <small>(선택 — 많을수록 정확해져요)</small></label>
       <input type="file" id="reffiles" accept="image/*" multiple style="width:100%;padding:11px;border:1.5px dashed var(--line);border-radius:10px;background:#FDFBF6;font-size:13px;font-family:inherit">
-      <div class="hint" style="margin-top:6px">최대 5장 · 장당 5MB 이하 권장. 지금 없으면 비워두세요 — 나중에 보내주셔도 무료 수정 1회로 반영됩니다.</div>
+      <div class="hint" style="margin-top:6px" id="refHint">몇 장이든 좋아요 — <b>최대 20장</b>, 전송 시 자동으로 용량을 줄여 보내드려요. 지금 없으면 비워두세요 (나중에 보내도 무료 수정 1회로 반영).</div>
     </div>
 
     <div class="sec">
@@ -214,6 +214,24 @@ if(t){
   $('typeselwrap').style.display='none';
 }
 
+/* 레퍼런스 이미지 클라이언트 압축 — 분석엔 1600px이면 충분 */
+async function compressImage(file){
+  try{
+    const bmp=await createImageBitmap(file);
+    const scale=Math.min(1,1600/Math.max(bmp.width,bmp.height));
+    const w=Math.round(bmp.width*scale), h2=Math.round(bmp.height*scale);
+    const cv=document.createElement('canvas'); cv.width=w; cv.height=h2;
+    cv.getContext('2d').drawImage(bmp,0,0,w,h2);
+    const blob=await new Promise(r=>cv.toBlob(r,'image/jpeg',0.82));
+    if(blob&&blob.size<file.size) return new File([blob],(file.name.replace(/\.[^.]+$/,'')||'ref')+'.jpg',{type:'image/jpeg'});
+  }catch(e){}
+  return file;
+}
+$('reffiles').addEventListener('change',()=>{
+  const n=$('reffiles').files.length;
+  $('refHint').innerHTML = n? `<b>${n}장 선택됨</b> — 전송할 때 자동으로 용량을 줄여 보내드려요.` : '몇 장이든 좋아요 — <b>최대 20장</b>, 전송 시 자동으로 용량을 줄여 보내드려요.';
+});
+
 /* submit — FormSubmit 직접 전송(첨부 포함), 실패 시 메일 앱 폴백 */
 const FS_ENDPOINT='https://formsubmit.co/ajax/jicloud.studio@gmail.com';
 $('submit').onclick=async()=>{
@@ -223,7 +241,7 @@ $('submit').onclick=async()=>{
   if(!email||!email.includes('@')) return alert('전달받을 이메일을 확인해주세요!');
   if(!$('ag1').checked||!$('ag2').checked) return alert('필수 동의 항목 2가지를 체크해주세요!');
   const files=$('reffiles').files;
-  if(files.length>5) return alert('레퍼런스는 5장까지만 첨부할 수 있어요!');
+  if(files.length>20) return alert('레퍼런스는 20장까지 첨부할 수 있어요! 그 이상은 접수 후 회신 메일로 보내주세요.');
   const type=t||$('typesel').value||'미정(분석 위임)';
   const fit=[['어깨','fit_shoulder'],['상체','fit_torso'],['키','fit_height'],['톤','fit_tone']]
     .map(([l,id])=>$(id)&&$(id).value?`${l} ${$(id).value}`:null).filter(Boolean).join(' · ')||'선택 안 함';
@@ -238,7 +256,7 @@ $('submit').onclick=async()=>{
    `${edition==='bride'?'드레스샵':'스튜디오'}: ${shop}`,
    `취향 타입: ${type}`,
    ...detail,
-   `레퍼런스: ${files.length? files.length+'장 첨부':'없음'}`,
+   `레퍼런스: ${files.length? Math.min(files.length,20)+'장 첨부':'없음'}`,
    `촬영 구성: ${pkgChoice || [ $('pkg_cnt').value+ (edition==='bride'?' (촬영용 드레스)':' (의상 교체)'), '캐주얼 '+$('pkg_casual').value, '야외 '+$('pkg_out').value ].join(' / ')}`,
    edition==='bride'?`핏 정보: ${fit}`:null,
    `성함: ${name}`,
@@ -259,7 +277,10 @@ $('submit').onclick=async()=>{
     fd.append('_subject','[이지플랜북] '+(edition==='bride'?'신부':'커플')+' 에디션 신청 — '+name);
     fd.append('_template','box'); fd.append('_captcha','false');
     fd.append('신청내용',body); fd.append('email',email);
-    for(let i=0;i<Math.min(files.length,5);i++) fd.append('attachment'+(i+1), files[i]);
+    const packed=await Promise.all([...files].slice(0,20).map(compressImage));
+    const totalMB=packed.reduce((s,f)=>s+f.size,0)/1048576;
+    if(totalMB>12){ $('submit').disabled=false; $('submit').textContent='신청 보내기'; return alert('압축 후에도 용량이 커요 ('+totalMB.toFixed(1)+'MB). 장수를 조금 줄여주시면 나머지는 회신 메일로 받아드릴게요!'); }
+    packed.forEach((f,i)=>fd.append('attachment'+(i+1), f));
     const res=await fetch(FS_ENDPOINT,{method:'POST',body:fd,headers:{'Accept':'application/json'}});
     const j=await res.json().catch(()=>({}));
     sent = res.ok && (j.success==='true'||j.success===true);
