@@ -280,7 +280,7 @@ $('submit').onclick=async()=>{
     const packed=await Promise.all([...files].slice(0,20).map(compressImage));
     const totalMB=packed.reduce((s,f)=>s+f.size,0)/1048576;
     if(totalMB>12){ $('submit').disabled=false; $('submit').textContent='신청 보내기'; return alert('압축 후에도 용량이 커요 ('+totalMB.toFixed(1)+'MB). 장수를 조금 줄여주시면 나머지는 회신 메일로 받아드릴게요!'); }
-    packed.forEach((f,i)=>fd.append('attachment'+(i+1), f));
+    packed.forEach(f=>fd.append('attachment', f));
     const res=await fetch(FS_ENDPOINT,{method:'POST',body:fd,headers:{'Accept':'application/json'}});
     const j=await res.json().catch(()=>({}));
     sent = res.ok && (j.success==='true'||j.success===true);
