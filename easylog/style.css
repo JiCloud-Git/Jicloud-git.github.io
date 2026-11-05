@@ -1,4 +1,4 @@
-@font-face{font-family:"Barunpen";src:url("fonts/barunpen.woff2?v=202611051330") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Barunpen";src:url("fonts/barunpen.woff2?v=202611051401") format("woff2");font-weight:400 700;font-display:swap}
 :root{--ink:#1a1a1a;--gray:#585858;--butter:#fff3c4;--butter2:#fce9a8;--mint:#def3eb;--cream:#fffce8;--white:#fff;--red:#e8604c;
 --sk:255px 18px 225px 18px/18px 225px 18px 255px;--sk2:18px 225px 18px 255px/255px 18px 225px 18px}
 *{box-sizing:border-box;margin:0}
@@ -9,8 +9,8 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%;height:auto}
 .wrap{max-width:560px;margin:0 auto;padding:0 16px}
 .hero{max-width:560px;margin:0 auto;padding:28px 16px 40px;text-align:center}
-.art{width:min(260px,68vw);margin:0 auto 8px}
-h1{font-size:46px;line-height:1.15;font-weight:700}
+.art{width:min(400px,100%);margin:0 auto 10px}
+h1{font-size:40px;line-height:1.15;font-weight:700}
 .bio{font-size:19px;color:var(--gray);margin:8px 0 24px}
 .main{display:grid;gap:12px}
 .btn{display:flex;align-items:center;gap:12px;min-height:60px;padding:12px 20px;background:var(--white);border:3px solid var(--ink);border-radius:var(--sk);font-size:20px;text-align:left;transition:transform .12s}
