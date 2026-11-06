@@ -1,4 +1,4 @@
-@font-face{font-family:"Barunpen";src:url("fonts/barunpen.woff2?v=202611051401") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Barunpen";src:url("fonts/barunpen.woff2?v=202611061048") format("woff2");font-weight:400 700;font-display:swap}
 :root{--ink:#1a1a1a;--gray:#585858;--butter:#fff3c4;--butter2:#fce9a8;--mint:#def3eb;--cream:#fffce8;--white:#fff;--red:#e8604c;
 --sk:255px 18px 225px 18px/18px 225px 18px 255px;--sk2:18px 225px 18px 255px/255px 18px 225px 18px}
 *{box-sizing:border-box;margin:0}
