@@ -352,7 +352,7 @@ const STEPS = [
     <div class="anim">
       <p class="eyebrow">이지로그 · 무료</p>
       <h1 class="q">상견례 소개 리플렛,<br>질문에 답하면 완성돼요</h1>
-      <p class="hint">양가 부모님께 두 사람과 두 가족을 소개하는 A4 3단 리플렛이에요. 10분이면 만들고, 집에서 두꺼운 종이에 양면으로 뽑으면 끝.</p>
+      <p class="hint">양가 부모님께 두 사람과 두 가족을 소개하는 A4 3단 리플렛이에요. 10분이면 만들고, 집에서 다이소 A4 펠트지(180g)에 양면으로 뽑으면 끝.</p>
       ${inAppNotice()}
       <div class="sample"><img src="img/sample_2.webp" alt="완성 예시 안쪽면"><img src="img/sample_1.webp" alt="완성 예시 바깥면"><span>완성 예시</span></div>
       <ul class="points">
@@ -490,7 +490,7 @@ const STEPS = [
     <div class="preview" id="pv"><p class="pgl">미리보기를 만드는 중이에요…</p></div>
     <div class="bigbtns"><button class="ghost kakao" id="sharepdf">카톡으로 PDF 보내기</button>${IS_MOBILE ? '' : '<button class="ghost" id="mobilepdf">이미지 PDF로 저장</button>'}<button class="ghost" id="share">결혼 준비하는 친구에게 알려주기</button><button class="ghost" id="export">작업 파일 저장 · 다른 기기에서 이어서 하기</button><button class="ghost" id="restart">처음부터 새로 만들기</button></div>
     ${IS_MOBILE ? `<div class="guide"><b>휴대폰에서 바로 인쇄하려면</b>위의 <b>PDF로 저장하기</b>로 받은 파일을 열고 ${/iPhone|iPad|iPod|Macintosh/.test(UA) ? '<b>공유 버튼 → 프린트</b>' : '<b>오른쪽 위 ⋮ → 인쇄</b>'}를 누르면 와이파이 프린터로 보낼 수 있어요. 집에 PC가 있다면 PDF를 PC로 옮겨 뽑는 게 가장 편해요.</div>` : ''}
-    <div class="pguide"><img src="img/print_guide.png" alt="상견례 리플렛 집에서 뽑는 법: 1 다이소 두꺼운 A4 준비 2 A4 가로·실제 크기 100%·양면 짧은 쪽 넘기기·두꺼운 종이 3 일반 종이로 시험 인쇄 4 오른쪽 칸 먼저 접고 왼쪽 칸 덮기">
+    <div class="pguide"><img src="img/print_guide.png?v=2" alt="상견례 리플렛 집에서 뽑는 법: 1 다이소 A4 펠트지(180g) 준비 2 A4 가로·실제 크기 100%·양면 짧은 쪽 넘기기·두꺼운 종이 3 일반 종이로 시험 인쇄 4 오른쪽 칸 먼저 접고 왼쪽 칸 덮기">
       <button class="btn2 dark" id="saveguide">${ICON.dl}인쇄 방법 이미지로 저장</button></div>
     <div class="follow"><b>이지로그와 함께 만들었어요</b>저희 결혼 준비 이야기는 인스타그램 <a href="https://www.instagram.com/2asy_log/" target="_blank" rel="noopener">@2asy_log</a>에서 연재 중이에요. 리플렛 만든 후기도 들려 주세요!</div>` ,
     after: async () => { await renderLeaflet(); buildPreview(); $('#mobilepdf') && ($('#mobilepdf').onclick = mobilePDF); $('#printpdf') && ($('#printpdf').onclick = () => window.print()); $('#share').onclick = shareLink; $('#sharepdf').onclick = sharePDF; $('#saveguide').onclick = saveGuide;
@@ -739,7 +739,7 @@ async function mobilePDF() {
 // 휴대폰은 공유 시트의 '이미지 저장'으로 사진첩에, PC는 파일로 내려받기
 async function saveGuide() {
   try {
-    const blob = await fetch('img/print_guide.png').then(r => r.blob());
+    const blob = await fetch("img/print_guide.png?v=2").then(r => r.blob());
     const f = new File([blob], '상견례_리플렛_인쇄방법.png', { type: 'image/png' });
     if (IS_MOBILE && navigator.canShare && navigator.canShare({ files: [f] })) { await navigator.share({ files: [f] }); return; }
     saveBlob(f); toast('인쇄 방법 이미지를 저장했어요');
