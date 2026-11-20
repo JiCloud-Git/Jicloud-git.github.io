@@ -301,8 +301,8 @@ textarea.inp{height:auto;min-height:96px;padding:14px 16px;line-height:1.6;resiz
 .L .chead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:5mm}
 .L .chead .tape{margin:0;align-self:auto}
 .L .chead p{font-size:9.5pt;color:#433c35;margin:0}
-.L .grid{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr}
-.L .c{border:0.4mm dashed #b9ad93;margin:-0.2mm;padding:8mm 7mm 5mm;display:flex;flex-direction:column;justify-content:center;position:relative}
+.L .grid{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;border-top:0.4mm dashed #b9ad93;border-left:0.4mm dashed #b9ad93}
+.L .c{border:0;border-right:0.4mm dashed #b9ad93;border-bottom:0.4mm dashed #b9ad93;margin:0;padding:8mm 7mm 5mm;display:flex;flex-direction:column;justify-content:center;position:relative}
 .L .c.big{grid-column:span 2}
 .L .c .k{font-family:"Barunpen";font-weight:700;font-size:9pt;color:#8a7a52;letter-spacing:1pt}
 .L .c h3{font-family:"Barunpen";font-weight:700;font-size:21pt;margin:2mm 0 1.5mm;line-height:1.3}
