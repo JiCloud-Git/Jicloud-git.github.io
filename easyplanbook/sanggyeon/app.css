@@ -1,0 +1,323 @@
+@font-face{font-family:"Barunpen";src:url("fonts/barunpen-b.woff2") format("woff2");font-weight:400 700;font-display:swap}
+:root{
+  --ink:#1c1815;--sub:#6b625a;--line:#ece6da;--bg:#fff;--fill:#f4f2ee;--accent:#fbe9a6;--accent2:#f5d76e;
+  --groom:#dbe8f5;--bride:#f7dde2;--ok:#2e9e6a;--err:#d9483b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{font-family:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo",sans-serif;color:var(--ink);word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+
+/* ===== 앱 껍데기 ===== */
+#app{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);display:flex;align-items:center;gap:12px;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top))}
+.back{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;flex:none}
+.back svg{width:24px;height:24px}
+.back[hidden]{visibility:hidden;display:flex}
+.bar{flex:1;height:6px;background:var(--fill);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ink);border-radius:99px;transition:width .3s}
+.cnt{font-size:13px;color:var(--sub);min-width:38px;text-align:right}
+#screen{flex:1;padding:12px 20px 130px}
+.cta-wrap{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:12px 20px max(16px,env(safe-area-inset-bottom));background:linear-gradient(rgba(255,255,255,0),#fff 30%)}
+.cta{display:block;width:100%;max-width:480px;margin:0 auto;height:56px;border-radius:16px;background:var(--ink);color:#fff;font-size:17px;font-weight:700;transition:opacity .15s,transform .1s}
+.cta:active{transform:scale(.98)}
+.cta:disabled{opacity:.25}
+.anim{animation:in .28s ease}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ===== 질문 화면 ===== */
+.eyebrow{font-size:14px;font-weight:700;color:#a8873a;margin:10px 0 6px}
+h1.q{font-size:25px;line-height:1.38;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+p.hint{font-size:15px;color:var(--sub);line-height:1.6;margin-bottom:24px}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:14px;color:var(--sub);margin-bottom:8px}
+.field label em{font-style:normal;color:#b0a79c;margin-left:4px;font-size:13px}
+.inp{width:100%;height:56px;border:0;border-radius:14px;background:var(--fill);padding:0 16px;font-size:17px;outline:none;transition:box-shadow .15s}
+.inp:focus{box-shadow:0 0 0 2px var(--ink) inset;background:#fff}
+textarea.inp{height:auto;min-height:96px;padding:14px 16px;line-height:1.6;resize:none}
+.row2{display:flex;gap:10px}.row2>*{flex:1;min-width:0}
+.counter{text-align:right;font-size:12px;color:#b0a79c;margin-top:4px}
+.counter.over{color:var(--err)}
+
+/* 선택 카드 */
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;padding:18px;border-radius:16px;background:var(--fill);border:2px solid transparent;transition:border-color .15s,background .15s}
+.opt .ic{flex:none;width:44px;height:44px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center}
+.opt .ic svg{width:24px;height:24px}
+.opt b{display:block;font-size:17px;margin-bottom:2px}
+.opt span{font-size:14px;color:var(--sub);line-height:1.5}
+.opt.on{border-color:var(--ink);background:#fff}
+.opt .tag{display:inline-block;font-size:11px;font-weight:700;background:var(--accent);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{height:42px;padding:0 16px;border-radius:99px;background:var(--fill);font-size:15px;border:2px solid transparent}
+.chip.on{background:#fff;border-color:var(--ink);font-weight:700}
+
+/* 가족 목록 */
+.mlist{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.mcard{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:var(--fill)}
+.mcard .av{flex:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Barunpen";font-weight:700;font-size:13px}
+.mcard .tx{flex:1;min-width:0}
+.mcard .tx b{display:block;font-size:16px}
+.mcard .tx span{display:block;font-size:13px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard .ed{font-size:14px;color:var(--sub);padding:8px}
+.add{width:100%;height:56px;border-radius:16px;border:2px dashed #d8d1c4;font-size:16px;font-weight:700;color:var(--sub)}
+.sheetbg{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.sheet-m{width:100%;max-width:520px;max-height:92dvh;overflow:auto;background:#fff;border-radius:24px 24px 0 0;padding:22px 20px max(20px,env(safe-area-inset-bottom));animation:up .25s ease}
+@keyframes up{from{transform:translateY(40px)}}
+.sheet-m h2{font-size:21px;margin-bottom:18px}
+.sheet-m .btns{display:flex;gap:10px;margin-top:8px}
+.sheet-m .btns button{flex:1;height:54px;border-radius:14px;font-size:16px;font-weight:700}
+.sheet-m .del{background:var(--fill);color:var(--err)}
+.sheet-m .save{background:var(--ink);color:#fff}
+
+/* 첫 화면 예시 · 인앱 안내 */
+.sample{position:relative;height:200px;margin:4px 0 18px;border-radius:18px;background:#f6f1e6;overflow:hidden}
+.sample img{position:absolute;width:74%;border-radius:4px;box-shadow:0 6px 18px rgba(0,0,0,.14);background:#fff}
+.sample img:first-child{left:5%;top:16px;transform:rotate(-3deg)}
+.sample img:nth-child(2){right:4%;top:48px;transform:rotate(3deg)}
+.sample span{position:absolute;left:12px;bottom:10px;font-size:12px;font-weight:700;background:#fff;border-radius:99px;padding:4px 10px}
+.inapp{border-radius:16px;background:#fff1f1;border:1.5px solid #f3c9c4;padding:14px 16px;margin:0 0 16px;font-size:14px;line-height:1.6}
+.inapp b{display:block;font-size:15px;margin-bottom:4px}
+.inapp p b{display:inline;font-size:inherit}
+.inapp .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.inapp a.btn2{text-decoration:none}
+
+/* 캐릭터 고르기 */
+.pglab{font-size:14px;color:var(--sub);margin:4px 0 8px}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.pgrid button{aspect-ratio:1;border-radius:50%;overflow:hidden;border:3px solid transparent;padding:0}
+.pgrid button.on{border-color:var(--ink)}
+.pgrid img{width:100%;height:100%;display:block}
+.mcard .av img{display:block}
+
+/* 프롬프트 키트 */
+.kit{border-radius:18px;background:var(--fill);padding:18px;margin-bottom:14px}
+.kit .st{font-size:13px;font-weight:700;color:#a8873a;margin-bottom:4px}
+.kit h3{font-size:17px;margin-bottom:6px}
+.kit p{font-size:14px;color:var(--sub);line-height:1.6}
+.kit pre{white-space:pre-wrap;font-family:inherit;font-size:13.5px;line-height:1.6;background:#fff;border-radius:12px;padding:12px 14px;margin:10px 0;max-height:150px;overflow:auto;color:#3b352f}
+.kit .acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn2{height:44px;padding:0 16px;border-radius:12px;background:#fff;font-size:15px;font-weight:700;border:1.5px solid var(--line);display:inline-flex;align-items:center;gap:6px}
+.btn2.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn2 svg{width:18px;height:18px}
+.kit .res{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.kit .res figure{width:64px;text-align:center}
+.kit .res img{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#fff}
+.kit .res figcaption{font-size:11.5px;color:var(--sub);margin-top:3px}
+.kit .res select{font-size:11.5px;width:64px;border:0;background:none;text-align:center;color:var(--sub)}
+.done-badge{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:var(--ok);margin-left:6px}
+.guide{border-radius:16px;border:1.5px solid var(--line);padding:16px 18px;margin-bottom:16px;font-size:14.5px;line-height:1.7;color:#3b352f}
+.guide b{color:var(--ink)}
+.guide ol{padding-left:20px}
+
+/* 사진 업로드 */
+.ups{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.up{text-align:center}
+.up label{display:block;cursor:pointer}
+.up .circ{width:88px;height:88px;margin:0 auto 6px;border-radius:50%;background:var(--fill);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px dashed #d8d1c4}
+.up .circ img{width:100%;height:100%;object-fit:cover}
+.up .circ.has{border:0}
+.up .circ svg{width:26px;height:26px;color:#b0a79c}
+.up span{font-size:13px;color:var(--sub)}
+.up input{display:none}
+
+/* 퀴즈 선택 */
+.qitem{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:var(--fill);margin-bottom:8px;border:2px solid transparent;text-align:left;width:100%}
+.qitem.on{background:#fff;border-color:var(--ink)}
+.qitem .ck{flex:none;width:24px;height:24px;border-radius:7px;border:2px solid #cfc7ba;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.qitem.on .ck{background:var(--ink);border-color:var(--ink)}
+.qitem .ck svg{width:16px;height:16px;color:#fff;display:none}
+.qitem.on .ck svg{display:block}
+.qitem span{font-size:15.5px;line-height:1.5}
+
+/* 완성 화면 */
+.preview{background:#f1eee8;border-radius:18px;padding:12px;margin:6px -6px 16px}
+.preview .pg{margin-bottom:10px;border-radius:6px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08);background:#fff}
+.preview .pg:last-child{margin-bottom:0}
+.preview .pgl{font-size:12.5px;color:var(--sub);margin:4px 2px 6px}
+.scaler{transform-origin:top left}
+.bigbtns{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.bigbtns .cta{position:static}
+.bigbtns .ghost.kakao{background:#fee500;color:#191600}
+.bigbtns .ghost{height:54px;border-radius:16px;background:var(--fill);font-size:16px;font-weight:700}
+.pguide{margin:4px 0 18px;text-align:center}
+.pguide img{width:100%;border-radius:16px;border:1.5px solid var(--line);display:block;margin-bottom:10px}
+.pguide .btn2{width:100%;justify-content:center;height:50px}
+.follow{border-radius:18px;background:#fff8dd;padding:18px;margin-top:6px;font-size:14.5px;line-height:1.65}
+.follow b{font-family:"Barunpen";font-size:17px;display:block;margin-bottom:4px}
+.follow a{color:var(--ink);font-weight:700}
+.intro-art{margin:8px auto 18px;width:100%;max-width:360px;display:block}
+.points{list-style:none;margin:0 0 10px}
+.points li{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;line-height:1.55;padding:9px 0}
+.points li i{flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);font-style:normal;font-family:"Barunpen";font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.small{font-size:12.5px;color:#9a9087;line-height:1.6}
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%) translateY(20px);background:rgba(28,24,21,.92);color:#fff;font-size:14.5px;padding:12px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:all .25s;z-index:60;max-width:88vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
+.resume{border-radius:14px;background:var(--fill);padding:14px 16px;font-size:14.5px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.resume button{font-weight:700;text-decoration:underline}
+
+/* ===================== 리플렛 (A4 가로 297×210mm) ===================== */
+#print{position:absolute;left:-9999px;top:0}
+.L{--k:1;font-family:"Noto Sans KR",sans-serif;font-weight:500;color:#1c1815;-webkit-print-color-adjust:exact;print-color-adjust:exact;word-break:keep-all;overflow-wrap:break-word}
+.L *{box-sizing:border-box}
+.L .sheet{width:297mm;height:210mm;display:flex;background:transparent;position:relative;overflow:hidden}
+.L .panel{height:210mm;position:relative;overflow:hidden}
+.L .w100{width:100mm}.L .w97{width:97mm}
+.L .pi{position:absolute;left:0;top:0;width:100%;height:100%;padding:10mm 8mm 8.5mm;display:flex;flex-direction:column;transform-origin:top left}
+.L .fold{position:absolute;top:0;bottom:0;width:0;border-left:0.2mm dashed #efe8d8}
+.L .tape{align-self:center;background:#fbe9a6;padding:2.6mm 7mm 2.2mm;font-family:"Barunpen";font-weight:700;font-size:15.5pt;letter-spacing:-0.2pt;text-align:center;line-height:1.3;transform:rotate(-1.2deg);margin-bottom:4mm;flex:none;
+  clip-path:polygon(1.5% 6%,4% 0,10% 5%,18% 1%,30% 4%,45% 0,60% 4%,74% 1%,88% 5%,96% 0,100% 8%,98.5% 50%,100% 92%,95% 100%,84% 95%,70% 100%,55% 96%,40% 100%,25% 95%,12% 100%,3% 96%,0 90%,1.5% 50%,0 12%)}
+.L .tape.r{transform:rotate(1deg)}
+.L .face{flex:none;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#dbe8f5}
+.L .face.b{background:#f7dde2}.L .face.p{background:#fdf3cc}
+.L .face img{width:100%;height:100%;object-fit:cover}
+.L .face .ini{font-family:"Barunpen";font-weight:700;color:#3b3530}
+.L .face.dash{background:transparent !important;border:0.5mm dashed #cfc3a8}
+.L .face.dash .ini{font-family:"Noto Sans KR";font-weight:500;font-size:7.5pt;color:#a99c80}
+
+/* 우리 소개 */
+.L .me{display:flex;gap:4mm;align-items:center;margin-top:5mm;flex:none}
+.L .me.rev{flex-direction:row-reverse}
+.L .me .face{width:33mm;height:33mm}
+.L .me .face .ini{font-size:17pt}
+.L .who{flex:1;min-width:0}
+.L .nm{font-family:"Barunpen";font-weight:700;font-size:14pt;display:flex;align-items:baseline;gap:2mm;flex-wrap:wrap}
+.L .me.rev .nm{justify-content:flex-end}
+.L .nm small{font-family:"Noto Sans KR";font-weight:500;font-size:9.6pt;color:#433c35}
+.L .mb{display:inline-block;font-family:"Barunpen";font-weight:700;font-size:8pt;padding:.6mm 2.2mm;border-radius:3mm;background:#dbe8f5;transform:rotate(-4deg)}
+.L .mb.b{background:#f7dde2;transform:rotate(4deg)}
+.L ul.pt{list-style:none;margin:2mm 0 0;padding:0}
+.L .me.rev ul.pt{display:table;margin-left:auto}
+.L ul.pt li{font-size:10pt;line-height:1.6;padding-left:3mm;position:relative}
+.L ul.pt li::before{content:"·";position:absolute;left:0}
+.L .story{margin-top:auto;background:transparent;border:0.3mm solid #e9dfc9;border-radius:3mm;padding:3.6mm 4mm 3.4mm;flex:none}
+.L .story h4{font-family:"Barunpen";font-weight:700;font-size:11.5pt;margin:0 0 2mm}
+.L .tl{list-style:none;position:relative;padding:0 0 0 4.5mm;margin:0}
+.L .tl::before{content:"";position:absolute;left:1.1mm;top:1.6mm;bottom:1.6mm;border-left:0.4mm dotted #c9b88a}
+.L .tl li{font-size:9.6pt;line-height:1.5;position:relative;margin-bottom:.8mm}
+.L .tl li::before{content:"";position:absolute;left:-4.3mm;top:1.3mm;width:2mm;height:2mm;border-radius:50%;background:#fbe9a6;border:0.35mm solid #b89d4e}
+.L .tl li:last-child::before{background:#f2b8c2;border-color:#c7808d}
+
+/* 결심 이유 */
+.L .why{margin-top:auto;flex:none}
+.L .tape + .why{margin-top:3mm}
+.L .quote.hand{padding:3mm 4.4mm 4mm}
+.L .quote.hand i{display:block;height:8.5mm;border-bottom:0.3mm solid #e2d8c4}
+.L .quote.hand::before{content:"인쇄 후 직접 적어 주세요";position:absolute;right:4mm;top:2.5mm;font-size:7.5pt;color:#a99c80}
+.L .why h3{font-family:"Barunpen";font-weight:700;font-size:13pt;display:flex;align-items:center;gap:2mm;margin:0 0 2.5mm}
+.L .why h3.r{justify-content:flex-end}
+.L .quote{position:relative;background:transparent;border:0.35mm solid #1c1815;border-radius:4mm;padding:4.2mm 4.4mm;font-size:10.5pt;line-height:1.75;white-space:pre-line}
+.L .quote::after{content:"";position:absolute;bottom:-2.6mm;width:4.4mm;height:4.4mm;background:transparent;border-right:0.35mm solid #1c1815;border-bottom:0.35mm solid #1c1815;transform:rotate(45deg)}
+.L .quote.g::after{left:9mm}.L .quote.b::after{right:9mm}
+.L .spk{display:flex;align-items:center;gap:2mm;margin-top:4mm;font-size:9.4pt;color:#433c35}
+.L .spk.r{justify-content:flex-end}
+.L .spk .face{width:11mm;height:11mm}
+.L .spk .face .ini{font-size:7pt}
+.L .together{margin-top:auto;text-align:center;flex:none}
+.L .together .pairimg{display:flex;justify-content:center;gap:2mm;margin-bottom:1mm}
+.L .together .pairimg img{width:27mm;height:27mm;object-fit:cover}
+.L .together .pairimg.ph img{border-radius:50%}
+.L .together p{font-family:"Noto Serif KR";font-weight:500;font-size:10.5pt;line-height:1.7;color:#433c35;white-space:pre-line;margin:0}
+
+/* 3면 공통 */
+.L .p3sub{text-align:center;font-family:"Barunpen";font-weight:700;font-size:11pt;margin:0 0 3mm;display:flex;justify-content:center;align-items:center;gap:1.6mm;flex:none}
+.L .p3sub svg{width:5mm;height:5mm}
+.L .note{text-align:center;font-size:8.8pt;color:#6e655b;margin-top:2.5mm;flex:none}
+/* 퀴즈 */
+.L .quiz ol{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;justify-content:space-evenly}
+.L .quiz li{display:flex;gap:2.6mm;align-items:flex-start;padding:3mm 0;border-bottom:0.3mm dashed #e9dfc9;font-size:11pt;line-height:1.5}
+.L .quiz li:last-child{border-bottom:0}
+.L .quiz li b{flex:none;font-family:"Barunpen";font-weight:700;font-size:10pt;background:#fbe9a6;border-radius:2mm;padding:.4mm 1.8mm;margin-top:.4mm}
+.L .bonus{margin-top:3mm;border:0.3mm solid #e9dfc9;border-radius:3mm;padding:3.4mm 4mm;flex:none}
+.L .bonus h4{font-family:"Barunpen";font-weight:700;font-size:11pt;margin:0 0 2mm;display:flex;align-items:center;gap:1.6mm}
+.L .bonus h4 em{font-style:normal;font-size:9pt;background:#f7dde2;border-radius:2mm;padding:.3mm 1.6mm}
+.L .bonus p{font-size:10pt;line-height:1.55;margin:1.2mm 0}
+/* 사진 칸 */
+.L .slot2{border:0.5mm dashed #cfc3a8;border-radius:3mm;flex:1;min-height:30mm;display:flex;align-items:center;justify-content:center;color:#a99c80;font-size:9.5pt;margin-top:2mm;overflow:hidden}
+.L .slot2.has{border:0.3mm solid #e9dfc9}
+.L .slot2 img{width:100%;height:100%;object-fit:cover}
+.L .cap{border-bottom:0.3mm solid #d9cfb8;min-height:7mm;margin:0 4mm 2mm;font-size:9.5pt;display:flex;align-items:flex-end;justify-content:center;padding-bottom:1mm;flex:none}
+/* 2세 */
+.L .us2{display:flex;flex-direction:column;align-items:center;flex:none}
+.L .us2 img{width:78mm;height:62mm;object-fit:cover;object-position:center 25%;border-radius:3mm;border:0.3mm solid #e9dfc9}
+.L .us2 span{font-family:"Barunpen";font-weight:700;font-size:11pt;margin-top:1.6mm}
+.L .kids h3{font-family:"Barunpen";font-weight:700;font-size:12pt;text-align:center;margin:5mm 0 2mm}
+.L .kpair{display:flex;gap:2.5mm;justify-content:center;flex:none}
+.L .kpair figure{position:relative;margin:0}
+.L .kpair img{width:39mm;height:50mm;object-fit:cover;border-radius:2.5mm;border:0.3mm solid #e9dfc9}
+.L .kpair figcaption{position:absolute;left:1.6mm;bottom:1.6mm;background:rgba(255,255,255,.9);padding:.5mm 2.2mm;border-radius:2mm;font-family:"Barunpen";font-weight:700;font-size:9.5pt}
+.L .kids .note{margin-top:auto}
+
+/* 가족 소개 */
+.L .fam{display:flex;gap:2.6mm;align-items:flex-start;margin-top:auto;flex:none}
+.L .famgap{margin-top:auto;flex:none}
+.L .fam .face{width:15mm;height:15mm}
+.L .fam .face .ini{font-size:10pt}
+.L .fam .t{flex:1;min-width:0}
+.L .fam .t b{font-family:"Barunpen";font-weight:700;font-size:11pt}
+.L .fam .t b span{font-family:"Noto Sans KR";font-weight:500;font-size:8.8pt;color:#433c35;margin-left:1mm}
+.L .fam .t b em{font-style:normal;font-family:"Barunpen";font-size:8.5pt;background:#fbe9a6;padding:.2mm 1.6mm;border-radius:2mm;margin-right:1.4mm;vertical-align:1px}
+.L .fam .t p{font-size:9pt;line-height:1.5;margin:.3mm 0 0;letter-spacing:-0.15pt;white-space:pre-line}
+.L .fam.pet{padding-top:2mm;border-top:0.3mm dashed #e9dfc9}
+.L .famfirst{margin-top:0}
+
+/* 일정·감사 */
+.L .slot{display:flex;gap:3mm;align-items:center;padding:2.4mm 0;border-bottom:0.3mm dashed #e9dfc9;flex:none;width:100%}
+.L .slot:last-of-type{border-bottom:0}
+.L .slot .tag{flex:none;width:18mm;text-align:center;font-family:"Barunpen";font-weight:700;font-size:10.5pt;padding:1.2mm 0;border-radius:2mm;background:#fdf3cc}
+.L .slot .tag.w{background:#f7dde2}
+.L .slot .d{font-size:10.5pt;line-height:1.55}
+.L .slot .d b{font-family:"Barunpen";font-weight:700;font-size:11.5pt}
+.L .onefam{border:0.3mm solid #e9dfc9;border-radius:3mm;padding:2.6mm 3mm 2.4mm;text-align:center;margin:4mm 0 6mm;width:100%;flex:none}
+.L .onefam h4{font-family:"Barunpen";font-weight:700;font-size:10.5pt;margin:0 0 1.4mm}
+.L .onefam .row{display:flex;justify-content:center;gap:1.2mm;flex-wrap:wrap}
+.L .onefam .row .face{width:11mm;height:11mm}
+.L .onefam .row .face .ini{font-size:7.5pt}
+.L .onefam .row .face.self{outline:0.5mm solid #e0c56a;outline-offset:0.3mm}
+.L .onefam .knot{color:#e48a99;font-size:9pt;line-height:1;margin:.6mm 0}
+.L .thanks{text-align:center;font-family:"Noto Serif KR";font-weight:500;font-size:9.8pt;line-height:1.7;flex:none}
+.L .thanks p{margin:0;white-space:pre-line}.L .thanks p+p{margin-top:2mm}
+.L .sign{margin-top:auto;padding-top:3mm;font-family:"Barunpen";font-weight:700;font-size:11.5pt;text-align:center;flex:none}
+.L .made{margin-top:1.5mm;text-align:center;font-size:6.5pt;color:#b3aa9e;flex:none}
+
+/* 표지 */
+.L .cover .pi{align-items:center;text-align:center;justify-content:space-between}
+.L .cover .en{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:34pt;letter-spacing:1.5pt;line-height:1}
+.L .cover .en.long{font-size:27pt}
+.L .cover .amp{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;font-size:22pt;color:#b89d4e;margin:1mm 0}
+.L .cover .ko{font-family:"Noto Serif KR";font-weight:500;font-size:11pt;letter-spacing:2pt;margin-top:3mm;color:#433c35}
+.L .cover .ko.big{font-size:20pt;letter-spacing:3pt;margin-top:0;color:#1c1815}
+.L .cover .art{width:68mm;max-height:95mm;display:flex;align-items:center;justify-content:center}
+.L .cover .art img{max-width:100%;max-height:95mm;display:block}
+.L .cover .art.ph img{border-radius:3mm;width:70mm;height:88mm;object-fit:cover}
+.L .cover .orn{width:30mm;height:30mm;color:#d9c48a}
+.L .cover .msg{font-family:"Noto Serif KR";font-weight:500;font-size:11pt;line-height:1.8;margin-bottom:4mm;white-space:pre-line}
+.L .cover .date{font-family:"Cormorant Garamond",serif;font-size:12pt;letter-spacing:2pt;color:#8a7a52;margin-top:2mm}
+
+/* 쿠폰 */
+.L .csheet{padding:12mm;flex-direction:column}
+.L .chead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:5mm}
+.L .chead .tape{margin:0;align-self:auto}
+.L .chead p{font-size:9.5pt;color:#433c35;margin:0}
+.L .grid{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr}
+.L .c{border:0.4mm dashed #b9ad93;margin:-0.2mm;padding:8mm 7mm 5mm;display:flex;flex-direction:column;justify-content:center;position:relative}
+.L .c.big{grid-column:span 2}
+.L .c .k{font-family:"Barunpen";font-weight:700;font-size:9pt;color:#8a7a52;letter-spacing:1pt}
+.L .c h3{font-family:"Barunpen";font-weight:700;font-size:21pt;margin:2mm 0 1.5mm;line-height:1.3}
+.L .c.big h3{font-size:30pt}
+.L .c p{font-size:11pt;line-height:1.55;color:#433c35;margin:0}
+.L .c .f{position:absolute;left:7mm;right:7mm;bottom:5mm;font-size:8.5pt;color:#6e655b;display:flex;justify-content:space-between;border-top:0.3mm solid #eee3cc;padding-top:2mm}
+.L .c .tg{position:absolute;top:5mm;right:5mm;font-family:"Barunpen";font-weight:700;font-size:9pt;padding:.6mm 2.4mm;border-radius:2mm;background:#f7dde2}
+.L .c.big .tg{background:#fbe9a6;font-size:11pt}
+
+/* 인쇄 */
+@page{size:297mm 210mm;margin:0}
+@media print{
+  html,body{background:transparent}
+  #app,#toast{display:none !important}
+  #print{position:static;left:auto}
+  #print .sheet{page-break-after:always;break-after:page}
+  #print .sheet:last-child{page-break-after:auto;break-after:auto}
+}
