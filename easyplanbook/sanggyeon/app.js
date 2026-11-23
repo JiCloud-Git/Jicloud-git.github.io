@@ -662,7 +662,7 @@ function leafletHTML() {
     <div class="row b">${face('face:bride', 'b self', bName())}${bfam.map(x => face('face:' + x.id, 'b', x.name || x.rel)).join('')}</div></div>` : '';
   const out = `<section class="sheet">
     <div class="panel w97"><div class="pi"><div class="tape">신랑의 가족을 소개합니다</div>${famHTML('g') || '<div class="famgap"></div>'}<div class="tape r famgap">신부의 가족을 소개합니다</div>${famHTML('b')}</div></div>
-    <div class="panel w100"><div class="pi" style="align-items:center"><div class="tape">함께하는 날</div>${m.date ? slot('상견례', '', m) : ''}${w.date ? slot('결혼식', 'w', w) : ''}${onefam}<div class="tape r">가족으로 맞아주셔서<br>감사합니다</div><div class="thanks">${paras(S.thanks || defThanks())}</div><div class="sign">${esc(gName())} <span style="color:#e48a99">♥</span> ${esc(bName())} 올림</div><div class="made">이지로그와 함께 만들었어요 · instagram @2asy_log</div></div></div>
+    <div class="panel w100"><div class="pi" style="align-items:center"><div class="tape">함께하는 날</div>${m.date ? slot('상견례', '', m) : ''}${w.date ? slot('결혼식', 'w', w) : ''}${onefam}<div class="tape r">가족으로 맞아주셔서<br>감사합니다</div><div class="thanks">${paras(S.thanks || defThanks())}</div><div class="sign">${esc(gName())} <span style="color:#e48a99">♥</span> ${esc(bName())} 올림</div></div></div>
     ${coverHTML()}<i class="fold" style="left:97mm"></i><i class="fold" style="left:197mm"></i></section>`;
   const story = S.story.filter(Boolean);
   const inside = `<section class="sheet">

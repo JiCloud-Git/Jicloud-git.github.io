@@ -280,7 +280,6 @@ textarea.inp{height:auto;min-height:96px;padding:14px 16px;line-height:1.6;resiz
 .L .thanks{text-align:center;font-family:"Noto Serif KR";font-weight:500;font-size:9.8pt;line-height:1.7;flex:none}
 .L .thanks p{margin:0;white-space:pre-line}.L .thanks p+p{margin-top:2mm}
 .L .sign{margin-top:auto;padding-top:3mm;font-family:"Barunpen";font-weight:700;font-size:11.5pt;text-align:center;flex:none}
-.L .made{margin-top:1.5mm;text-align:center;font-size:6.5pt;color:#b3aa9e;flex:none}
 
 /* 표지 */
 .L .cover .pi{align-items:center;text-align:center;justify-content:space-between}
