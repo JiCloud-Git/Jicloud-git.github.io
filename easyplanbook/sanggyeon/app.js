@@ -502,6 +502,20 @@ const josa = n => { const c = short(n).slice(-1).charCodeAt(0); return c >= 0xAC
 const paras = t => String(t || '').split(/\n\s*\n/).map(x => `<p>${esc(x.trim())}</p>`).join('');
 function defThanks() { return `친구처럼 편안했던 사람과\n앞으로의 모든 날을 함께하고 싶어\n오늘 이 자리에 모이게 되었습니다.\n\n서로 다른 길을 걸어온 저희가\n이제 한 가족이 되어 새로운 시작을 하려 합니다.\n\n지금까지 한결같은 사랑으로 키워주시고\n응원해 주신 부모님께 진심으로 감사드립니다.\n\n서로에게 가장 편안하고 든든한 사람이 되어\n웃음과 온기가 가득한 가정을 꾸려가겠습니다.`; }
 
+/* ---------- 이용 집계: 숫자만 센다(입력 내용·사진은 절대 보내지 않음) ---------- */
+// open=들어옴(탭 세션당 1번) · start=시작하기 누름 · done=완성 화면 도달 (start·done은 리플렛 1개당 1번, 새로 만들기 시 초기화)
+// 내 기기는 주소 끝에 ?me=1 을 한 번 붙여 열면 이후 집계에서 빠진다
+const HIT_API = 'https://ig.nadeurikorea.com/hit', HIT_LS = 'sgl_hit';
+const NOCOUNT = (() => { try { if (/[?&]me=1\b/.test(location.search)) localStorage.setItem('sgl_me', '1'); return localStorage.getItem('sgl_me') === '1'; } catch (e) { return false; } })();
+function hit(e) {
+  if (NOCOUNT) return;
+  try {
+    if (e === 'open') { if (sessionStorage.getItem('sgl_open')) return; sessionStorage.setItem('sgl_open', '1'); }
+    else { const h = JSON.parse(localStorage.getItem(HIT_LS) || '{}'); if (h[e]) return; h[e] = 1; localStorage.setItem(HIT_LS, JSON.stringify(h)); }
+  } catch (err) {}
+  try { fetch(HIT_API, { method: 'POST', mode: 'no-cors', keepalive: true, body: JSON.stringify({ e }) }).catch(() => {}); } catch (err) {}
+}
+
 /* ---------- 내비게이션 ---------- */
 const visible = () => STEPS.map((s, i) => [s, i]).filter(([s]) => !s.show || s.show());
 function go(i) {
@@ -517,6 +531,8 @@ function go(i) {
   bind(); refreshValid();
   window.scrollTo(0, 0);
   st.after && st.after();
+  if (i > 0) hit('start');
+  if (st.id === 'done') hit('done');
 }
 function nextStep() {
   const st = STEPS[S.step];
@@ -770,7 +786,7 @@ function confirmSheet() {
   bg.innerHTML = `<div class="sheet-m"><h2>처음부터 새로 만들까요?</h2><p class="hint" style="margin-bottom:16px">입력한 내용과 그림이 이 기기에서 모두 지워져요.</p><div class="btns"><button class="del" id="cno" style="color:var(--ink)">취소</button><button class="save" id="cyes">새로 만들기</button></div></div>`;
   document.body.appendChild(bg);
   $('#cno', bg).onclick = () => bg.remove(); bg.onclick = e => { if (e.target === bg) bg.remove(); };
-  $('#cyes', bg).onclick = () => { S = DEF(); clearImgs(); try { localStorage.removeItem(LS); } catch (e) {} bg.remove(); go(0); };
+  $('#cyes', bg).onclick = () => { S = DEF(); clearImgs(); try { localStorage.removeItem(LS); localStorage.removeItem(HIT_LS); } catch (e) {} bg.remove(); go(0); };
 }
 
 /* 첫 화면에 작업 파일 불러오기 */
@@ -778,6 +794,7 @@ const introAfter = STEPS[0].after;
 STEPS[0].after = () => { introAfter(); const p = document.createElement('p'); p.className = 'small'; p.style.marginTop = '10px'; p.innerHTML = 'PC에서 이어서 하나요? <button style="text-decoration:underline;font-size:inherit;color:inherit" id="imp">작업 파일 불러오기</button>'; $('#screen .anim').appendChild(p); $('#imp').onclick = importFile; };
 
 window.addEventListener('beforeprint', () => { if (!$('#print .sheet')) renderLeaflet(); });
+hit('open');
 (async () => { await dbOpen(); await dbAll(); go(S.step && STEPS[S.step] ? 0 : 0); })();
 window.__sgl = { S: () => S, IMG, go, renderLeaflet, putImg, STEPS, buildPDF };
 })();
